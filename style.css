@@ -82,7 +82,7 @@ body {
     object-fit: cover;
 }
 .main-article__content {
-    grid-column: span 4/-1;
+    grid-column: span 5;
     padding-right: 63px;
 }
 

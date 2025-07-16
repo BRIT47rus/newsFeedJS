@@ -244,9 +244,9 @@ const data = {
 
 const mainNews = data.items.slice(0, 3);
 const smallNews = data.items.slice(3, 12);
-
-const mainNewsTemplate = document.getElementById('main-news-item');
-const smallArticleTemplate = document.getElementById('small-article-item');
+//для доступа к template ---------------------------------
+// const mainNewsTemplate = document.getElementById('main-news-item');
+// const smallArticleTemplate = document.getElementById('small-article-item');
 
 const mainNewContainer = document.querySelector('.articles__big-column');
 const smallArticleContainer = document.querySelector('.articles__small-column');
@@ -269,6 +269,7 @@ const mainNewsElement = mainNews.forEach((item) => {
     mainNewContainer.appendChild(createMainNewsItem(item));
 });
 smallNews.forEach((item) => {
+    //Темплейт тренировка--------------------------------------
     // const element = smallArticleTemplate.content.cloneNode(true);
     // element.querySelector('.articles__small-tittle').textContent = item.title;
     // element.querySelector('.articles-small__source ').textContent =
@@ -282,7 +283,7 @@ smallNews.forEach((item) => {
     //     day: 'numeric',
     // });
 
-    // smallArticleContainer.appendChild(element);
+    // smallArticleContainer.appendChild(element);---------------------------
     smallArticleContainer.appendChild(createSmallItem(item));
 });
 
@@ -333,17 +334,6 @@ function createMainNewsItem(item) {
 
     return article;
 }
-/*
-<article class="articles-small">
-    <h2 class="articles__small-tittle">
-        В американском зоопарке празднуют рождение гориллы: видео
-    </h2>
-    <p class="articles-small__caption">
-        <span class="articles-small__date article-date">12 ИЮЛЯ </span>
-        <span class="articles-small__source article-source">ИСТОЧНИК</span>
-    </p>
-</article>;**/
-
 function createSmallItem(item) {
     const sourceData = data.sources.find(
         (src) => src.id === item.source_id

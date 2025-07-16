@@ -255,15 +255,28 @@ const mainNewsElement = mainNews.forEach((item) => {
     element.querySelector('.main--article__text').textContent =
         item.description;
     element.querySelector('.main-article__img').src = item.image;
-    // element.querySelector('.main--article__category').textContent =
-    //     item.source_id;
+    element.querySelector('.main--article__category').textContent =
+        data.categories.find((catItem) => catItem.id === item.category_id).name;
+    element.querySelector('.main-article__source').textContent =
+        data.sources.find(
+            (sourceItem) => sourceItem.id === item.source_id
+        ).name;
 
     mainNewContainer.appendChild(element);
 });
 smallNews.forEach((item) => {
     const element = smallArticleTemplate.content.cloneNode(true);
     element.querySelector('.articles__small-tittle').textContent = item.title;
-    element.querySelector('.articles-small__date').textContent = item.date;
-    // element.querySelector('.main-article__img').src = item.image;
+    element.querySelector('.articles-small__source ').textContent =
+        data.sources.find(
+            (sourceItem) => sourceItem.id === item.source_id
+        ).name;
+    element.querySelector('.articles-small__date').textContent = new Date(
+        item.date
+    ).toLocaleDateString('ru-RU', {
+        month: 'long',
+        day: 'numeric',
+    });
+
     smallArticleContainer.appendChild(element);
 });

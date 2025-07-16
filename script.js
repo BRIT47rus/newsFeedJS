@@ -266,7 +266,34 @@ const mainNewsElement = mainNews.forEach((item) => {
     //     ).name;
 
     // mainNewContainer.appendChild(element);--------------------------------------
-    mainNewContainer.appendChild(createMainNewsItem(item));
+
+    const template = document.createElement('template');
+
+    const categoryData = data.categories.find(
+        (catItem) => catItem.id === item.category_id
+    ).name;
+    const sourceData = data.sources.find(
+        (sourceItem) => sourceItem.id === item.source_id
+    ).name;
+
+    template.innerHTML = `
+    <article class="main-article">
+    <div class="main-article__image-container">
+        <img src="${item.image}" alt="" class="main-article__img" />
+    </div>
+    <div class="main-article__content">
+        <span class="article-category main--article__category">${categoryData}</span>
+        <h2 class="main-article__tittle">
+           ${item.title}
+        </h2>
+        <p class="main--article__text">
+           ${item.description}
+        </p>
+        <span class="article-source main-article__source">${sourceData}</span>
+    </div>
+</article>`;
+
+    mainNewContainer.appendChild(template.content);
 });
 smallNews.forEach((item) => {
     //Темплейт тренировка--------------------------------------
@@ -284,7 +311,29 @@ smallNews.forEach((item) => {
     // });
 
     // smallArticleContainer.appendChild(element);---------------------------
-    smallArticleContainer.appendChild(createSmallItem(item));
+    const template = document.createElement('template');
+    const sourceData = data.sources.find(
+        (src) => src.id === item.source_id
+    ).name;
+
+    const date = new Date(item.date).toLocaleDateString('ru-RU', {
+        day: 'numeric',
+        month: 'long',
+    });
+
+    template.innerHTML = `
+        <article class="articles-small">
+            <h2 class="articles__small-tittle">
+                ${item.title}
+            </h2>
+            <p class="articles-small__caption">
+                <span class="articles-small__date article-date">${date} </span>
+                <span class="articles-small__source article-source">${sourceData}</span>
+            </p>
+        </article>
+    `;
+
+    smallArticleContainer.appendChild(template.content);
 });
 
 function createMainNewsItem(item) {
@@ -365,3 +414,32 @@ function createSmallItem(item) {
 
     return article;
 }
+//----------------------------------------big
+// <article class="main-article">
+//     <div class="main-article__image-container">
+//         <img src="./image/2.png" alt="" class="main-article__img" />
+//     </div>
+//     <div class="main-article__content">
+//         <span class="article-category main--article__category">ТЕХНОЛОГИИ</span>
+//         <h2 class="main-article__tittle">
+//             Отец жанра. Как уже забытый трип-хоп определяет самую популяр…
+//         </h2>
+//         <p class="main--article__text">
+//             Новая мода на топовые наряды необычных цветов. В сезоне – топики,
+//             шорты-боксеры, сланцы и сандалии. А также большие солнечные очки и
+//             яркая шляпка.
+//         </p>
+//         <span class="article-source main-article__source">ИСТОЧНИК</span>
+//     </div>
+// </article>;
+
+//-------------------------------------------------small
+// <article class="articles-small">
+//     <h2 class="articles__small-tittle">
+//         В американском зоопарке празднуют рождение гориллы: видео
+//     </h2>
+//     <p class="articles-small__caption">
+//         <span class="articles-small__date article-date">12 ИЮЛЯ </span>
+//         <span class="articles-small__source article-source">ИСТОЧНИК</span>
+//     </p>
+// </article>;

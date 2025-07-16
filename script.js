@@ -244,11 +244,15 @@ const data = {
 
 const mainNews = data.items.slice(0, 3);
 const smallNews = data.items.slice(3, 12);
+
+//работаю с темплейтами-----------------------------------------------
+
 const mainNewsTemplate = document.getElementById('main-news-item');
 const smallArticleTemplate = document.getElementById('small-article-item');
 
 const mainNewContainer = document.querySelector('.articles__big-column');
 const smallArticleContainer = document.querySelector('.articles__small-column');
+
 const mainNewsElement = mainNews.forEach((item) => {
     const element = mainNewsTemplate.content.cloneNode(true);
     element.querySelector('.main-article__tittle').textContent = item.title;
@@ -262,7 +266,8 @@ const mainNewsElement = mainNews.forEach((item) => {
             (sourceItem) => sourceItem.id === item.source_id
         ).name;
 
-    mainNewContainer.appendChild(element);
+    // mainNewContainer.appendChild(element);
+    mainNewContainer.appendChild(createMainNewsItem(item));
 });
 smallNews.forEach((item) => {
     const element = smallArticleTemplate.content.cloneNode(true);
@@ -280,3 +285,70 @@ smallNews.forEach((item) => {
 
     smallArticleContainer.appendChild(element);
 });
+//   <article class="main-article">
+//       <div class="main-article__image-container">
+//           <img src="./image/2.png" alt="" class="main-article__img" />
+//       </div>
+//       <div class="main-article__content">
+//           <span class="article-category main--article__category">
+//               ТЕХНОЛОГИИ
+//           </span>
+//           <h2 class="main-article__tittle">
+//               Отец жанра. Как уже забытый трип-хоп определяет самую популяр…
+//           </h2>
+//           <p class="main--article__text">
+//               Новая мода на топовые наряды необычных цветов. В сезоне – топики,
+//               шорты-боксеры, сланцы и сандалии. А также большие солнечные очки и
+//               яркая шляпка.
+//           </p>
+//           <span class="article-source main-article__source">ИСТОЧНИК</span>
+//       </div>
+//   </article>;
+
+function createMainNewsItem(item) {
+    const categoryData = data.categories.find(
+        (catItem) => catItem.id === item.category_id
+    ).name;
+    const sourceData = data.sources.find(
+        (sourceItem) => sourceItem.id === item.source_id
+    ).name;
+
+    const article = document.createElement('article');
+    const imageConteiner = document.createElement('div');
+    const image = document.createElement('img');
+    const articleContent = document.createElement('div');
+    const articleCategory = document.createElement('span');
+    const articleTitle = document.createElement('h2');
+    const articleText = document.createElement('p');
+    const articleSource = document.createElement('span');
+
+    article.classList.add('main-article');
+    imageConteiner.classList.add('main-article__image-container');
+    image.classList.add('main-article__img');
+    articleContent.classList.add('main-article__content');
+    articleCategory.classList.add(
+        'main--article__category',
+        'article-category'
+    );
+
+    articleTitle.classList.add('main-article__tittle');
+    articleText.classList.add('main--article__text');
+    articleSource.classList.add('article-source', 'main-article__source');
+
+    articleTitle.textContent = item.title;
+    articleText.textContent = item.description;
+    image.src = item.image;
+    articleCategory.textContent = categoryData;
+
+    articleSource.textContent = sourceData;
+
+    imageConteiner.appendChild(image);
+    article.appendChild(imageConteiner);
+    articleContent.appendChild(articleCategory);
+    articleContent.appendChild(articleTitle);
+    articleContent.appendChild(articleText);
+    articleContent.appendChild(articleSource);
+    article.appendChild(articleContent);
+
+    return article;
+}

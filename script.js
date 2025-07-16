@@ -245,8 +245,6 @@ const data = {
 const mainNews = data.items.slice(0, 3);
 const smallNews = data.items.slice(3, 12);
 
-//работаю с темплейтами-----------------------------------------------
-
 const mainNewsTemplate = document.getElementById('main-news-item');
 const smallArticleTemplate = document.getElementById('small-article-item');
 
@@ -254,56 +252,39 @@ const mainNewContainer = document.querySelector('.articles__big-column');
 const smallArticleContainer = document.querySelector('.articles__small-column');
 
 const mainNewsElement = mainNews.forEach((item) => {
-    const element = mainNewsTemplate.content.cloneNode(true);
-    element.querySelector('.main-article__tittle').textContent = item.title;
-    element.querySelector('.main--article__text').textContent =
-        item.description;
-    element.querySelector('.main-article__img').src = item.image;
-    element.querySelector('.main--article__category').textContent =
-        data.categories.find((catItem) => catItem.id === item.category_id).name;
-    element.querySelector('.main-article__source').textContent =
-        data.sources.find(
-            (sourceItem) => sourceItem.id === item.source_id
-        ).name;
+    // для тренировки темплейтов template---------------------------------
+    // const element = mainNewsTemplate.content.cloneNode(true);
+    // element.querySelector('.main-article__tittle').textContent = item.title;
+    // element.querySelector('.main--article__text').textContent =
+    //     item.description;
+    // element.querySelector('.main-article__img').src = item.image;
+    // element.querySelector('.main--article__category').textContent =
+    //     data.categories.find((catItem) => catItem.id === item.category_id).name;
+    // element.querySelector('.main-article__source').textContent =
+    //     data.sources.find(
+    //         (sourceItem) => sourceItem.id === item.source_id
+    //     ).name;
 
-    // mainNewContainer.appendChild(element);
+    // mainNewContainer.appendChild(element);--------------------------------------
     mainNewContainer.appendChild(createMainNewsItem(item));
 });
 smallNews.forEach((item) => {
-    const element = smallArticleTemplate.content.cloneNode(true);
-    element.querySelector('.articles__small-tittle').textContent = item.title;
-    element.querySelector('.articles-small__source ').textContent =
-        data.sources.find(
-            (sourceItem) => sourceItem.id === item.source_id
-        ).name;
-    element.querySelector('.articles-small__date').textContent = new Date(
-        item.date
-    ).toLocaleDateString('ru-RU', {
-        month: 'long',
-        day: 'numeric',
-    });
+    // const element = smallArticleTemplate.content.cloneNode(true);
+    // element.querySelector('.articles__small-tittle').textContent = item.title;
+    // element.querySelector('.articles-small__source ').textContent =
+    //     data.sources.find(
+    //         (sourceItem) => sourceItem.id === item.source_id
+    //     ).name;
+    // element.querySelector('.articles-small__date').textContent = new Date(
+    //     item.date
+    // ).toLocaleDateString('ru-RU', {
+    //     month: 'long',
+    //     day: 'numeric',
+    // });
 
-    smallArticleContainer.appendChild(element);
+    // smallArticleContainer.appendChild(element);
+    smallArticleContainer.appendChild(createSmallItem(item));
 });
-//   <article class="main-article">
-//       <div class="main-article__image-container">
-//           <img src="./image/2.png" alt="" class="main-article__img" />
-//       </div>
-//       <div class="main-article__content">
-//           <span class="article-category main--article__category">
-//               ТЕХНОЛОГИИ
-//           </span>
-//           <h2 class="main-article__tittle">
-//               Отец жанра. Как уже забытый трип-хоп определяет самую популяр…
-//           </h2>
-//           <p class="main--article__text">
-//               Новая мода на топовые наряды необычных цветов. В сезоне – топики,
-//               шорты-боксеры, сланцы и сандалии. А также большие солнечные очки и
-//               яркая шляпка.
-//           </p>
-//           <span class="article-source main-article__source">ИСТОЧНИК</span>
-//       </div>
-//   </article>;
 
 function createMainNewsItem(item) {
     const categoryData = data.categories.find(
@@ -349,6 +330,48 @@ function createMainNewsItem(item) {
     articleContent.appendChild(articleText);
     articleContent.appendChild(articleSource);
     article.appendChild(articleContent);
+
+    return article;
+}
+/*
+<article class="articles-small">
+    <h2 class="articles__small-tittle">
+        В американском зоопарке празднуют рождение гориллы: видео
+    </h2>
+    <p class="articles-small__caption">
+        <span class="articles-small__date article-date">12 ИЮЛЯ </span>
+        <span class="articles-small__source article-source">ИСТОЧНИК</span>
+    </p>
+</article>;**/
+
+function createSmallItem(item) {
+    const sourceData = data.sources.find(
+        (src) => src.id === item.source_id
+    ).name;
+
+    const article = document.createElement('article');
+    article.classList.add('articles-small');
+    const title = document.createElement('h2');
+    title.classList.add('articles__small-tittle');
+    title.textContent = item.title;
+    const caption = document.createElement('p');
+    caption.classList.add('articles-small__caption');
+
+    const dateData = document.createElement('span');
+    dateData.classList.add('articles-small__date', 'article-date');
+    dateData.textContent = new Date(item.date).toLocaleDateString('ru-RU', {
+        day: 'numeric',
+        month: 'long',
+    });
+
+    const source = document.createElement('span');
+    source.classList.add('articles-small__source', 'article-source');
+    source.textContent = sourceData;
+
+    caption.appendChild(dateData);
+    caption.appendChild(source);
+    article.appendChild(title);
+    article.appendChild(caption);
 
     return article;
 }

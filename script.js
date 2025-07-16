@@ -28,7 +28,7 @@ const data = {
             date: 'Mon Oct 11 2021 16:58:58 GMT+0300 (Moscow Standard Time)',
             title: 'Путин назвал причину своего кашля',
             description:
-                'Президент России Владимир Путин рассказал о причине своего кашля и заявил, что со здоровьем у него все нормально. Об этом он рассказал на совещании с постоянными членами Совбеза РФ.\n\n"Валентина Ивановна (Матвиенко) не беспокойтесь, ...',
+                'Президент России  Владимир Путин рассказал о причине своего кашля и заявил, что со здоровьем у него все нормально. Об этом он рассказал на совещании с постоянными членами Совбеза РФ.\n\n"Валентина Ивановна (Матвиенко) не беспокойтесь, ...',
             image: 'https://img.gazeta.ru/files3/211/14034211/RIAN_6661933.HR-pic905-895x505-19909.jpg',
             source_id: 15,
             category_id: 4,
@@ -251,6 +251,17 @@ const smallNews = data.items.slice(3, 12);
 const mainNewContainer = document.querySelector('.articles__big-column');
 const smallArticleContainer = document.querySelector('.articles__small-column');
 
+const escapeString = (string) => {
+    const symbols = {
+        '&': '&amp',
+        '<': '&lt',
+        '>': '&gt',
+    };
+    return string.replace(/[$<>]/g, (tag) => {
+        return symbols[tag] || tag;
+    });
+};
+
 const mainNewsElement = mainNews.forEach((item) => {
     // для тренировки темплейтов template---------------------------------
     // const element = mainNewsTemplate.content.cloneNode(true);
@@ -279,17 +290,21 @@ const mainNewsElement = mainNews.forEach((item) => {
     template.innerHTML = `
     <article class="main-article">
     <div class="main-article__image-container">
-        <img src="${item.image}" alt="" class="main-article__img" />
+        <img src="${encodeURI(item.image)}" alt="" class="main-article__img" />
     </div>
     <div class="main-article__content">
-        <span class="article-category main--article__category">${categoryData}</span>
+        <span class="article-category main--article__category">${escapeString(
+            categoryData
+        )}</span>
         <h2 class="main-article__tittle">
-           ${item.title}
+           ${escapeString(item.title)}
         </h2>
         <p class="main--article__text">
-           ${item.description}
+           ${escapeString(item.description)}
         </p>
-        <span class="article-source main-article__source">${sourceData}</span>
+        <span class="article-source main-article__source">${escapeString(
+            sourceData
+        )}</span>
     </div>
 </article>`;
 
@@ -324,11 +339,15 @@ smallNews.forEach((item) => {
     template.innerHTML = `
         <article class="articles-small">
             <h2 class="articles__small-tittle">
-                ${item.title}
+                ${escapeString(item.title)}
             </h2>
             <p class="articles-small__caption">
-                <span class="articles-small__date article-date">${date} </span>
-                <span class="articles-small__source article-source">${sourceData}</span>
+                <span class="articles-small__date article-date">${escapeString(
+                    date
+                )} </span>
+                <span class="articles-small__source article-source">${escapeString(
+                    sourceData
+                )}</span>
             </p>
         </article>
     `;

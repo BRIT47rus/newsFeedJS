@@ -1,7 +1,22 @@
+const categoryIDs = {
+    index: 0,
+    fashion: 3,
+    tech: 1,
+    sport: 2,
+    politics: 4,
+};
+const categoryNames = {
+    index: 'Главная',
+    fashion: 'Мода',
+    tech: 'Технологии',
+    sport: 'Спорт',
+    politics: 'Политика',
+};
+
 const App = () => {
     const [category, setCategory] = React.useState('index');
     const [articles, setArticles] = React.useState({
-        articles: [],
+        items: [],
         categories: [],
         sources: [],
     });
@@ -9,7 +24,17 @@ const App = () => {
         e.preventDefault();
         setCategory(e.currentTarget.dataset.href);
     };
-    console.log(category);
+    React.useEffect(() => {
+        fetch(
+            'https://frontend.karpovcourses.net/api/v2/ru/news/' +
+                categoryIDs[category] || ''
+        )
+            .then((res) => res.json())
+            .then((response) => {
+                setArticles(response);
+            });
+    }, [category]);
+
     return (
         <>
             <div id="root"></div>
@@ -27,77 +52,32 @@ const App = () => {
                                 alt=""
                             />
                         </a>
+
                         <ul className="navigation__list">
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="index"
-                                    href="./index.html"
-                                    className={`navigation__link ${
-                                        category === 'index'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    ГЛАВНАЯ
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="fashion"
-                                    href="./fashion.html"
-                                    className={`navigation__link ${
-                                        category === 'fashion'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    МОДА
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="tech"
-                                    href="./tech.html"
-                                    className={`navigation__link ${
-                                        category === 'tech'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    ТЕХНОЛОГИИ
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="politics"
-                                    href="./politics.html"
-                                    className={`navigation__link ${
-                                        category === 'politics'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    политика
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="sport"
-                                    href="./sport.html"
-                                    className={`navigation__link ${
-                                        category === 'sport'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    спорт
-                                </a>
-                            </li>
+                            {[
+                                'index',
+                                'fashion',
+                                'tech',
+                                'sport',
+                                'politics',
+                            ].map((item, index) => {
+                                return (
+                                    <li className="navigation__item" key={item}>
+                                        <a
+                                            onClick={onNavClick}
+                                            data-href={item}
+                                            href="#"
+                                            className={`navigation__link ${
+                                                category === item
+                                                    ? 'navigation__link--active'
+                                                    : ''
+                                            }`}
+                                        >
+                                            {categoryNames[item]}
+                                        </a>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </nav>
                 </div>
@@ -106,219 +86,47 @@ const App = () => {
                 <section className="articles">
                     <div className="container grid">
                         <section className="articles__big-column">
-                            <article className="main-article">
-                                <div className="main-article__image-container">
-                                    <img
-                                        src="./image/2.png"
-                                        alt=""
-                                        className="main-article__img"
-                                    />
-                                </div>
-                                <div className="main-article__content">
-                                    <span className="article-category main--article__category">
-                                        ТЕХНОЛОГИИ
-                                    </span>
-                                    <h2 className="main-article__tittle">
-                                        Отец жанра. Как уже забытый трип-хоп
-                                        определяет самую популяр…
-                                    </h2>
-                                    <p className="main--article__text">
-                                        Новая мода на топовые наряды необычных
-                                        цветов. В сезоне – топики,
-                                        шорты-боксеры, сланцы и сандалии. А
-                                        также большие солнечные очки и яркая
-                                        шляпка.
-                                    </p>
-                                    <span className="article-source main-article__source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </div>
-                            </article>
-                            <article className="main-article">
-                                <div className="main-article__image-container">
-                                    <img
-                                        src="./image/3.png"
-                                        alt=""
-                                        className="main-article__img"
-                                    />
-                                </div>
-                                <div className="main-article__content">
-                                    <span className="article-category main--article__category">
-                                        ТЕХНОЛОГИИ
-                                    </span>
-                                    <h2 className="main-article__tittle">
-                                        Отец жанра. Как уже забытый трип-хоп
-                                        определяет самую популяр…
-                                    </h2>
-                                    <p className="main--article__text">
-                                        Новая мода на топовые наряды необычных
-                                        цветов. В сезоне – топики,
-                                        шорты-боксеры, сланцы и сандалии. А
-                                        также большие солнечные очки и яркая
-                                        шляпка.
-                                    </p>
-                                    <span className="article-source main-article__source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </div>
-                            </article>
-                            <article className="main-article">
-                                <div className="main-article__image-container">
-                                    <img
-                                        src="./image/1.png"
-                                        alt=""
-                                        className="main-article__img"
-                                    />
-                                </div>
-                                <div className="main-article__content">
-                                    <span className="article-category main--article__category">
-                                        ТЕХНОЛОГИИ
-                                    </span>
-                                    <h2 className="main-article__tittle">
-                                        Отец жанра. Как уже забытый трип-хоп
-                                        определяет самую популяр…
-                                    </h2>
-                                    <p className="main--article__text">
-                                        Новая мода на топовые наряды необычных
-                                        цветов. В сезоне – топики,
-                                        шорты-боксеры, сланцы и сандалии. А
-                                        также большие солнечные очки и яркая
-                                        шляпка.
-                                    </p>
-                                    <span className="article-source main-article__source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </div>
-                            </article>
+                            {articles &&
+                                articles.items.slice(0, 3).map((item) => {
+                                    return (
+                                        <article
+                                            className="main-article"
+                                            key={item.title}
+                                        >
+                                            <div className="main-article__image-container">
+                                                <img
+                                                    src={item.image}
+                                                    alt=""
+                                                    className="main-article__img"
+                                                />
+                                            </div>
+                                            <div className="main-article__content">
+                                                <span className="article-category main--article__category">
+                                                    {articles.categories.find(
+                                                        (id) =>
+                                                            item.category_id ===
+                                                            id
+                                                    )}
+                                                </span>
+                                                <h2 className="main-article__tittle">
+                                                    {item.title}
+                                                </h2>
+                                                <p className="main--article__text">
+                                                    {item.description}
+                                                </p>
+                                                <span className="article-source main-article__source">
+                                                    {articles.sources.find(
+                                                        (id) =>
+                                                            item.source_id ===
+                                                            id
+                                                    )}
+                                                </span>
+                                            </div>
+                                        </article>
+                                    );
+                                })}
                         </section>
-                        <section className="articles__small-column">
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                            <article className="articles-small">
-                                <h2 className="articles__small-tittle">
-                                    В американском зоопарке празднуют рождение
-                                    гориллы: видео
-                                </h2>
-                                <p className="articles-small__caption">
-                                    <span className="articles-small__date article-date">
-                                        12 ИЮЛЯ{' '}
-                                    </span>
-                                    <span className="articles-small__source article-source">
-                                        ИСТОЧНИК
-                                    </span>
-                                </p>
-                            </article>
-                        </section>
+                        <section className="articles__small-column"></section>
                     </div>
                 </section>
             </main>
@@ -333,76 +141,30 @@ const App = () => {
                             />
                         </a>
                         <ul className="navigation__list">
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="index"
-                                    href="./index.html"
-                                    className={`navigation__link ${
-                                        category === 'index'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    ГЛАВНАЯ
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="fashion"
-                                    href="./fashion.html"
-                                    className={`navigation__link ${
-                                        category === 'fashion'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    МОДА
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="tech"
-                                    href="./tech.html"
-                                    className={`navigation__link ${
-                                        category === 'tech'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    ТЕХНОЛОГИИ
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="politics"
-                                    href="./politics.html"
-                                    className={`navigation__link ${
-                                        category === 'politics'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    политика
-                                </a>
-                            </li>
-                            <li className="navigation__item">
-                                <a
-                                    onClick={onNavClick}
-                                    data-href="sport"
-                                    href="./sport.html"
-                                    className={`navigation__link ${
-                                        category === 'sport'
-                                            ? 'navigation__link--active'
-                                            : ''
-                                    }`}
-                                >
-                                    спорт
-                                </a>
-                            </li>
+                            {[
+                                'index',
+                                'fashion',
+                                'tech',
+                                'sport',
+                                'politics',
+                            ].map((item, index) => {
+                                return (
+                                    <li className="navigation__item" key={item}>
+                                        <a
+                                            onClick={onNavClick}
+                                            data-href={item}
+                                            href="#"
+                                            className={`navigation__link ${
+                                                category === item
+                                                    ? 'navigation__link--active'
+                                                    : ''
+                                            }`}
+                                        >
+                                            {categoryNames[item]}
+                                        </a>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </nav>
                     <div className="footer__column">

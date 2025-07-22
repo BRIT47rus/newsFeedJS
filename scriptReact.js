@@ -13,6 +13,78 @@ const categoryNames = {
     politics: 'Политика',
 };
 
+const MainArticle = ({ title, image, category, description, source }) => {
+    return (
+        <article className="main-article">
+            <div className="main-article__image-container">
+                <img src={image} alt="" className="main-article__img" />
+            </div>
+            <div className="main-article__content">
+                <span className="article-category main--article__category">
+                    {category}
+                </span>
+                <h2 className="main-article__tittle">{title}</h2>
+                <p className="main--article__text">{description}</p>
+                <span className="article-source main-article__source">
+                    {source}
+                </span>
+            </div>
+        </article>
+    );
+};
+const SmallArticle = ({ title, source, date }) => {
+    return (
+        <article className="articles-small">
+            <h2 className="articles__small-tittle">{title}</h2>
+
+            <span className="articles-small__date article-date">
+                {new Date(date).toLocaleString('ru-Ru', {
+                    day: '2-digit',
+                    month: 'long',
+                })}
+            </span>
+            <span className="articles-small__source article-source">
+                {source}
+            </span>
+        </article>
+    );
+};
+const Navigation = ({ onNavClick, currentCategory, className = '' }) => {
+    return (
+        <nav className={`navigation grid  ${className} `}>
+            <a data-href="index" href="#" className="navigation__logo">
+                <img
+                    className="navigation__image"
+                    src="./image/logo.svg"
+                    alt=""
+                />
+            </a>
+            <ul className="navigation__list">
+                {['index', 'fashion', 'tech', 'sport', 'politics'].map(
+                    (item, index) => {
+                        return (
+                            <li className="navigation__item" key={item}>
+                                <a
+                                    onClick={onNavClick}
+                                    data-href={item}
+                                    href="#"
+                                    className={`navigation__link ${
+                                        currentCategory === item
+                                            ? 'navigation__link--active'
+                                            : ''
+                                    }`}
+                                >
+                                    {categoryNames[item]}
+                                </a>
+                            </li>
+                        );
+                    }
+                )}
+            </ul>
+        </nav>
+    );
+};
+
 const App = () => {
     const [category, setCategory] = React.useState('index');
     const [articles, setArticles] = React.useState({
@@ -40,46 +112,11 @@ const App = () => {
             <div id="root"></div>
             <header className="header">
                 <div className="container">
-                    <nav className="navigation grid header-nav">
-                        <a
-                            onClick={onNavClick}
-                            href="./index.html"
-                            className="navigation__logo"
-                        >
-                            <img
-                                className="navigation__image"
-                                src="./image/logo.svg"
-                                alt=""
-                            />
-                        </a>
-
-                        <ul className="navigation__list">
-                            {[
-                                'index',
-                                'fashion',
-                                'tech',
-                                'sport',
-                                'politics',
-                            ].map((item, index) => {
-                                return (
-                                    <li className="navigation__item" key={item}>
-                                        <a
-                                            onClick={onNavClick}
-                                            data-href={item}
-                                            href="#"
-                                            className={`navigation__link ${
-                                                category === item
-                                                    ? 'navigation__link--active'
-                                                    : ''
-                                            }`}
-                                        >
-                                            {categoryNames[item]}
-                                        </a>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </nav>
+                    <Navigation
+                        className="header-nav"
+                        currentCategory={category}
+                        onNavClick={onNavClick}
+                    />
                 </div>
             </header>
             <main className="main">
@@ -89,84 +126,53 @@ const App = () => {
                             {articles &&
                                 articles.items.slice(0, 3).map((item) => {
                                     return (
-                                        <article
-                                            className="main-article"
+                                        <MainArticle
+                                            category={
+                                                articles.categories.find(
+                                                    ({ id }) =>
+                                                        item['category_id'] ===
+                                                        id
+                                                ).name || ''
+                                            }
+                                            image={item.image}
+                                            source={
+                                                articles.sources.find(
+                                                    ({ id }) =>
+                                                        item.source_id === id
+                                                ).name
+                                            }
+                                            description={item.description}
+                                            title={item.title}
                                             key={item.title}
-                                        >
-                                            <div className="main-article__image-container">
-                                                <img
-                                                    src={item.image}
-                                                    alt=""
-                                                    className="main-article__img"
-                                                />
-                                            </div>
-                                            <div className="main-article__content">
-                                                <span className="article-category main--article__category">
-                                                    {articles.categories.find(
-                                                        (id) =>
-                                                            item.category_id ===
-                                                            id
-                                                    )}
-                                                </span>
-                                                <h2 className="main-article__tittle">
-                                                    {item.title}
-                                                </h2>
-                                                <p className="main--article__text">
-                                                    {item.description}
-                                                </p>
-                                                <span className="article-source main-article__source">
-                                                    {articles.sources.find(
-                                                        (id) =>
-                                                            item.source_id ===
-                                                            id
-                                                    )}
-                                                </span>
-                                            </div>
-                                        </article>
+                                        />
                                     );
                                 })}
                         </section>
-                        <section className="articles__small-column"></section>
+                        <section className="articles__small-column">
+                            {articles.items.slice(3, 12).map((item) => (
+                                <SmallArticle
+                                    date={item.date}
+                                    source={
+                                        articles.sources.find(
+                                            ({ id }) => item.source_id === id
+                                        ).name
+                                    }
+                                    key={item.title}
+                                    title={item.title}
+                                />
+                            ))}
+                        </section>
                     </div>
                 </section>
             </main>
             <footer className="footer">
                 <div className="container">
-                    <nav className="navigation grid footer__nav">
-                        <a href="#" className="navigation__logo">
-                            <img
-                                className="navigation__image"
-                                src="./image/logo.svg"
-                                alt=""
-                            />
-                        </a>
-                        <ul className="navigation__list">
-                            {[
-                                'index',
-                                'fashion',
-                                'tech',
-                                'sport',
-                                'politics',
-                            ].map((item, index) => {
-                                return (
-                                    <li className="navigation__item" key={item}>
-                                        <a
-                                            onClick={onNavClick}
-                                            data-href={item}
-                                            href="#"
-                                            className={`navigation__link ${
-                                                category === item
-                                                    ? 'navigation__link--active'
-                                                    : ''
-                                            }`}
-                                        >
-                                            {categoryNames[item]}
-                                        </a>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </nav>
+                    <Navigation
+                        className="footer-nav"
+                        currentCategory={category}
+                        onNavClick={onNavClick}
+                    />
+
                     <div className="footer__column">
                         <p className="footer__text">
                             Все вопросы

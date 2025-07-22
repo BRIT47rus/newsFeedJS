@@ -4,7 +4,8 @@
     --color-accent: #f35833;
     --color-white: #fff;
     --color-gray: #868686;
-    --grid-col-width: 101px;
+    --container-width: 1440px;
+    --grid-col-width: 98px;
     --grid-gap: 20px;
 }
 * {
@@ -190,6 +191,7 @@ body {
     background-color: var(--color-primary);
     padding-top: 22px;
     padding-bottom: 26px;
+    min-width: var(--container-width);
 }
 .footer__nav {
     margin-bottom: 47px;
@@ -242,6 +244,7 @@ body {
     gap: var(--grid-gap);
 }
 .container {
-    max-width: 1435px;
+    max-width: var(--container-width);
     margin: 0 auto;
+    padding: 0 20px;
 }

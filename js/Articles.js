@@ -1,5 +1,6 @@
-import { MainArticle } from './MainArticle';
-import { SmallArticle } from './SmallArticle';
+import { MainArticle } from './MainArticle.js';
+import { SmallArticle } from './SmallArticle.js';
+
 export const Articles = ({ articles }) => {
     return (
         <section className="articles">

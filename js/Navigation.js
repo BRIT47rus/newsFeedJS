@@ -1,4 +1,5 @@
-import { categoryNames } from './utils';
+import { categoryNames } from './utils.js';
+
 export const Navigation = ({ onNavClick, currentCategory, className = '' }) => {
     return (
         <nav className={`navigation grid  ${className} `}>

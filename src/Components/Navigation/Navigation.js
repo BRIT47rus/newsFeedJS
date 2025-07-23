@@ -1,8 +1,16 @@
-import { categoryNames } from './utils.js';
-
-export const Navigation = ({ onNavClick, currentCategory, className = '' }) => {
+import React from 'react';
+import { categoryNames } from '../../utils.js';
+import './Navigation.css';
+export const Navigation = ({
+    onNavClick,
+    currentCategory,
+    className = '',
+    placement = 'header',
+}) => {
     return (
-        <nav className={`navigation grid  ${className} `}>
+        <nav
+            className={`navigation grid  navigation--${placement} ${className} `}
+        >
             <a data-href="index" href="#" className="navigation__logo">
                 <img
                     className="navigation__image"

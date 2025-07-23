@@ -1,3 +1,4 @@
+import React from 'react';
 export const SmallArticle = ({ title, source, date }) => {
     return (
         <article className="articles-small">

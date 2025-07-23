@@ -1,7 +1,8 @@
-import { categoryIDs } from './utils.js';
-import { Navigation } from './Navigation.js';
-import { Articles } from './Articles.js';
-
+import { categoryIDs } from '../../utils.js';
+import { Navigation } from '../Navigation/Navigation.js';
+import { Articles } from '../Articles/Articles.js';
+import React from 'react';
+import './App.css';
 export const App = () => {
     const [category, setCategory] = React.useState('index');
     const [articles, setArticles] = React.useState({
@@ -33,6 +34,7 @@ export const App = () => {
                         className="header-nav"
                         currentCategory={category}
                         onNavClick={onNavClick}
+                        placement="header"
                     />
                 </div>
             </header>
@@ -45,6 +47,7 @@ export const App = () => {
                         className="footer__nav"
                         currentCategory={category}
                         onNavClick={onNavClick}
+                        placement="footer"
                     />
 
                     <div className="footer__column">

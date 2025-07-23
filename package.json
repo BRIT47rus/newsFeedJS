@@ -1,0 +1,16 @@
+{
+    "name": "news",
+    "version": "1.0.0",
+    "main": "scriptReact.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@babel/cli": "^7.28.0",
+        "@babel/core": "^7.28.0"
+    }
+}

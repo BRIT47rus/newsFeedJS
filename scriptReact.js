@@ -168,7 +168,7 @@ const App = () => {
             <footer className="footer">
                 <div className="container">
                     <Navigation
-                        className="footer-nav"
+                        className="footer__nav"
                         currentCategory={category}
                         onNavClick={onNavClick}
                     />

@@ -3,6 +3,7 @@ import { Navigation } from '../Navigation/Navigation.js';
 import { Articles } from '../Articles/Articles.js';
 import React from 'react';
 import './App.css';
+import Article from '../Article/Article.js';
 export const App = () => {
     const [category, setCategory] = React.useState('index');
     const [articles, setArticles] = React.useState({
@@ -39,7 +40,8 @@ export const App = () => {
                 </div>
             </header>
             <main className="main">
-                <Articles articles={articles} />
+                {/* <Articles articles={articles} /> */}
+                <Article />
             </main>
             <footer className="footer">
                 <div className="container">

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './Navigation.css';
 import logo from '../../image/logo.svg';
-export const Navigation = ({
+import { categoryNames } from '../../utils';
+
+interface NavigationProps {
+    onNavClick: (event: React.MouseEvent<HTMLElement>) => void;
+    currentCategory: string;
+    className?: string;
+    placement: 'header' | 'footer';
+}
+export const Navigation: FC<NavigationProps> = ({
     onNavClick,
     currentCategory,
     className = '',

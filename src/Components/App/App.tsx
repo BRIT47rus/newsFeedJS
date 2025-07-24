@@ -3,20 +3,24 @@ import './App.css';
 import { categoryIDs } from '../../utils';
 import { Articles } from '../Articles/Articles';
 import { Navigation } from '../Navigation/Navigation';
+import { NewsAPI } from '../../types';
 export const App = () => {
-    const [articleId, setArticleId] = useState(null);
-    const [category, setCategory] = React.useState('index');
-    const [articles, setArticles] = React.useState({
+    const [articleId, setArticleId] = useState<number | null>(null);
+    const [category, setCategory] = React.useState<string>('index');
+    const [articles, setArticles] = React.useState<NewsAPI>({
         items: [],
         categories: [],
         sources: [],
     });
-    const onNavClick = (e) => {
+    const onNavClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         setArticleId(null);
-        setCategory(e.currentTarget.dataset.href);
+        const category = e.currentTarget.dataset.href;
+        if (category) {
+            setCategory(category);
+        }
     };
-    const onArticleClick = (id) => {
+    const onArticleClick = (id: number) => {
         setArticleId(id);
     };
     React.useEffect(() => {
@@ -25,7 +29,7 @@ export const App = () => {
                 categoryIDs[category] || ''
         )
             .then((res) => res.json())
-            .then((response) => {
+            .then((response: NewsAPI) => {
                 setArticles(response);
             });
     }, [category]);

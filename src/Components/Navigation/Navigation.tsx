@@ -1,5 +1,4 @@
 import React from 'react';
-import { categoryNames } from '../../utils.js';
 import './Navigation.css';
 import logo from '../../image/logo.svg';
 export const Navigation = ({

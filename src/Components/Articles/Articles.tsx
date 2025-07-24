@@ -1,7 +1,7 @@
 import React from 'react';
-import { MainArticle } from '../MainArticle/MainArticle.js';
-import { SmallArticle } from '../SmallaArticles/SmallArticle.js';
 import './articles.css';
+import { MainArticle } from '../MainArticle/MainArticle';
+import { SmallArticle } from '../SmallaArticles/SmallArticle';
 export const Articles = ({ articles, onArticleClick }) => {
     return (
         <section className="articles">

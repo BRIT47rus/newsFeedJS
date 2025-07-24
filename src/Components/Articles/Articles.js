@@ -2,7 +2,7 @@ import React from 'react';
 import { MainArticle } from '../MainArticle/MainArticle.js';
 import { SmallArticle } from '../SmallaArticles/SmallArticle.js';
 import './articles.css';
-export const Articles = ({ articles }) => {
+export const Articles = ({ articles, onArticleClick }) => {
     return (
         <section className="articles">
             <div className="container grid">
@@ -11,6 +11,7 @@ export const Articles = ({ articles }) => {
                         articles.items.slice(0, 3).map((item) => {
                             return (
                                 <MainArticle
+                                    onClick={() => onArticleClick(item.id)}
                                     category={
                                         articles.categories.find(
                                             ({ id }) =>
@@ -33,6 +34,7 @@ export const Articles = ({ articles }) => {
                 <section className="articles__small-column">
                     {articles.items.slice(3, 12).map((item) => (
                         <SmallArticle
+                            onClick={() => onArticleClick(item.id)}
                             date={item.date}
                             source={
                                 articles.sources.find(

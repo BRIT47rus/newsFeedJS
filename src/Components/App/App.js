@@ -1,10 +1,11 @@
 import { categoryIDs } from '../../utils.js';
 import { Navigation } from '../Navigation/Navigation.js';
 import { Articles } from '../Articles/Articles.js';
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Article from '../Article/Article.js';
 export const App = () => {
+    const [articleId, setArticleId] = useState(null);
     const [category, setCategory] = React.useState('index');
     const [articles, setArticles] = React.useState({
         items: [],
@@ -13,7 +14,11 @@ export const App = () => {
     });
     const onNavClick = (e) => {
         e.preventDefault();
+        setArticleId(null);
         setCategory(e.currentTarget.dataset.href);
+    };
+    const onArticleClick = (id) => {
+        setArticleId(id);
     };
     React.useEffect(() => {
         fetch(
@@ -40,8 +45,11 @@ export const App = () => {
                 </div>
             </header>
             <main className="main">
-                {/* <Articles articles={articles} /> */}
-                <Article />
+                {articleId !== null ? (
+                    <Article />
+                ) : (
+                    <Articles articles={articles} />
+                )}
             </main>
             <footer className="footer">
                 <div className="container">

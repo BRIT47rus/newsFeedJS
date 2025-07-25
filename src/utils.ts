@@ -12,3 +12,8 @@ export const categoryNames = {
     sport: 'Спорт',
     politics: 'Политика',
 };
+export const beautifyDate = (date: string): string =>
+    new Date(date).toLocaleString('ru-RU', {
+        month: 'long',
+        day: 'numeric',
+    });

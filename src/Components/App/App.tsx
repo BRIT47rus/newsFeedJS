@@ -50,9 +50,12 @@ export const App = () => {
             </header>
             <main className="main">
                 {articleId !== null ? (
-                    <ArticleItem />
+                    <ArticleItem id={articleId} />
                 ) : (
-                    <ArticleItem articles={articles} />
+                    <Articles
+                        articles={articles}
+                        onArticleClick={onArticleClick}
+                    />
                 )}
             </main>
             <footer className="footer">

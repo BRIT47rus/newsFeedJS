@@ -3,6 +3,21 @@ export interface NewsAPI {
     categories: ICategories[];
     items: IArticle[];
 }
+export interface ArticleItemAPI {
+    id: number;
+    lang: string;
+    date: string;
+    title: string;
+    description: string;
+    image: string;
+    link: string;
+    text: string;
+    category: ICategories;
+    source: ISource;
+}
+export interface RelatedArticlesAPI {
+    items: IArticle[];
+}
 export interface ISource {
     id: number;
     name: string;

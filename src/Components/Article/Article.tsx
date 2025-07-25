@@ -2,13 +2,20 @@ import React, { FC } from 'react';
 import './ArticleItem.css';
 import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle';
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
-import { IArticle, ICategories, ISource } from '../../types';
+import {
+    ArticleItemAPI,
+    IArticle,
+    ICategories,
+    ISource,
+    RelatedArticlesAPI,
+} from '../../types';
+import { beautifyDate } from '../../utils';
 
 interface Props {
     id: number;
-    categories: ICategories[];
-    sources: ISource[];
-    onArticleClick: (id: number) => void;
+    categories?: ICategories[];
+    sources?: ISource[];
+    onArticleClick?: (id: number) => void;
 }
 
 export const ArticleItem: FC<Props> = ({

@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { categoryIDs } from '../../utils';
 import { Articles } from '../Articles/Articles';
 import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
-import { ICategories, ISource, NewsAPI } from '../../types';
+import { NewsAPI } from '../../types';
 
 export const App = () => {
     const [articleId, setArticleId] = useState<number | null>(null);
@@ -28,7 +28,6 @@ export const App = () => {
     React.useEffect(() => {
         fetch(
             'https://frontend.karpovcourses.net/api/v2/ru/news/' +
-                //@ts-ignore
                 categoryIDs[category] || ''
         )
             .then((res) => res.json())

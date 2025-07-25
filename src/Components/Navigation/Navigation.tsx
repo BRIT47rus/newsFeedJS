@@ -37,10 +37,7 @@ export const Navigation: FC<NavigationProps> = ({
                                             : ''
                                     }`}
                                 >
-                                    {
-                                        //@ts-ignore
-                                        categoryNames[item]
-                                    }
+                                    {categoryNames[item]}
                                 </a>
                             </li>
                         );

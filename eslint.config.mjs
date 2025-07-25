@@ -3,13 +3,13 @@ import eslintParserTypescript from '@typescript-eslint/parser';
 
 export default [
     {
-        files: ['**/*.ts', '**/*.tsx'], // Применяется ко всем файлам .ts и .tsx
+        files: ['**/*.ts', '**/*.tsx'],
         languageOptions: {
             parser: eslintParserTypescript,
             parserOptions: {
-                project: './tsconfig.json', // Укажите путь к вашему файлу tsconfig.json
+                project: './tsconfig.json',
                 ecmaFeatures: {
-                    jsx: true, // Включить парсинг JSX для файлов .tsx
+                    jsx: true,
                 },
             },
         },
@@ -17,28 +17,30 @@ export default [
             '@typescript-eslint': eslintPluginTypescript,
         },
         rules: {
-            // Добавьте или переопределите любые нужные правила
-            // Например, для использования рекомендуемых правил TypeScript:
             ...eslintPluginTypescript.configs['eslint-recommended'].rules,
             ...eslintPluginTypescript.configs.recommended.rules,
-            // Возможно, вы также захотите включить react/jsx-uses-react, react/jsx-uses-vars, если используете React
-            // или, если не используете React, отключите соответствующие правила
+            quotes: [
+                'error',
+                'single',
+                {
+                    avoidEscape: true,
+                    allowTemplateLiterals: true,
+                },
+            ],
+            'comma-dangle': [
+                'error',
+                {
+                    arrays: 'always-multiline',
+                    objects: 'always-multiline',
+                    imports: 'always-multiline',
+                    exports: 'always-multiline',
+                    functions: 'never', // Changed this from 'always-multiline' to 'never' based on your previous input.
+                },
+            ],
+            indent: ['error', 2],
         },
     },
-    {
-        files: ['**/*.js'], // Применяется ко всем файлам .js (если они у вас есть)
-        languageOptions: {
-            parserOptions: {
-                ecmaVersion: 'latest',
-                sourceType: 'module',
-            },
-        },
-        rules: {
-            // Добавьте свои правила для JavaScript здесь
-        },
-    },
-    // Вы также можете добавить глобальный игнор для файлов/папок здесь, если нужно,
-    // вместо устаревшего .eslintignore
+    // REMOVE THE COMMA FROM HERE
     {
         ignores: ['node_modules/', 'dist/', 'build/'],
     },

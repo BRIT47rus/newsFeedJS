@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import './ArticleItem.css';
+import './Article.css';
 import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle';
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
 import {

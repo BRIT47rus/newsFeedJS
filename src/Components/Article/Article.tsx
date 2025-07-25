@@ -13,9 +13,9 @@ import { beautifyDate } from '../../utils';
 
 interface Props {
     id: number;
-    categories?: ICategories[];
-    sources?: ISource[];
-    onArticleClick?: (id: number) => void;
+    categories: ICategories[];
+    sources: ISource[];
+    onArticleClick: (id: number) => void;
 }
 
 export const ArticleItem: FC<Props> = ({

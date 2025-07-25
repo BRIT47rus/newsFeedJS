@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import './App.css';
 import { categoryIDs } from '../../utils';
 import { Articles } from '../Articles/Articles';
 import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
-import { NewsAPI } from '../../types';
+import { ICategories, ISource, NewsAPI } from '../../types';
+
 export const App = () => {
     const [articleId, setArticleId] = useState<number | null>(null);
     const [category, setCategory] = React.useState<string>('index');
@@ -27,6 +28,7 @@ export const App = () => {
     React.useEffect(() => {
         fetch(
             'https://frontend.karpovcourses.net/api/v2/ru/news/' +
+                //@ts-ignore
                 categoryIDs[category] || ''
         )
             .then((res) => res.json())
@@ -50,7 +52,12 @@ export const App = () => {
             </header>
             <main className="main">
                 {articleId !== null ? (
-                    <ArticleItem id={articleId} />
+                    <ArticleItem
+                        id={articleId}
+                        categories={articles.categories}
+                        sources={articles.sources}
+                        onArticleClick={onArticleClick}
+                    />
                 ) : (
                     <Articles
                         articles={articles}

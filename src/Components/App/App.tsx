@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { categoryIDs } from '../../utils';
 import { Articles } from '../Articles/Articles';
+import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
 import { NewsAPI } from '../../types';
 export const App = () => {
@@ -49,9 +50,9 @@ export const App = () => {
             </header>
             <main className="main">
                 {articleId !== null ? (
-                    <Article />
+                    <ArticleItem />
                 ) : (
-                    <Articles articles={articles} />
+                    <ArticleItem articles={articles} />
                 )}
             </main>
             <footer className="footer">

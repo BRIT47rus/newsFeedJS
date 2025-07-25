@@ -2,11 +2,12 @@ import React, { FC } from 'react';
 import './ArticleItem.css';
 import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle';
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
+import { IArticle, ICategories, ISource } from '../../types';
 
 interface Props {
     id: number;
-    categories: Category[];
-    sources: Source[];
+    categories: ICategories[];
+    sources: ISource[];
     onArticleClick: (id: number) => void;
 }
 
@@ -20,7 +21,7 @@ export const ArticleItem: FC<Props> = ({
         null
     );
     const [relatedArticles, setRelatedArticles] = React.useState<
-        Article[] | null
+        IArticle[] | null
     >(null);
 
     React.useEffect(() => {

@@ -1,42 +1,42 @@
 {
-    "name": "news",
-    "version": "1.0.0",
-    "scripts": {
-        "dev": "webpack serve",
-        "build": "webpack",
-        "eslint": "eslint --ext .ts,.tsx,.js ./ --fix",
-        "prettier": "prettier --write /"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": "",
-    "dependencies": {
-        "@babel/cli": "^7.28.0",
-        "@babel/core": "^7.28.0",
-        "@babel/preset-react": "^7.27.1",
-        "babel-loader": "^10.0.0",
-        "css-loader": "^7.1.2",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-react": "^7.37.5",
-        "html-webpack-plugin": "^5.6.3",
-        "prettier": "^3.6.2",
-        "react": "^19.1.0",
-        "react-dom": "^19.1.0",
-        "style-loader": "^4.0.0",
-        "typescript-eslint": "^8.38.0",
-        "webpack": "^5.100.2",
-        "webpack-cli": "^6.0.1",
-        "webpack-dev-server": "^5.2.2"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.31.0",
-        "@types/react": "^19.1.8",
-        "@types/react-dom": "^19.1.6",
-        "@typescript-eslint/eslint-plugin": "^8.38.0",
-        "@typescript-eslint/parser": "^8.38.0",
-        "eslint": "^9.31.0",
-        "ts-loader": "^9.5.2",
-        "typescript": "^5.8.3"
-    }
+  "name": "news",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "webpack serve",
+    "build": "webpack",
+    "eslint": "eslint --ext .ts,.tsx,.js ./ --fix",
+    "prettier": "prettier --write \"{**/*,*}.{tsx,ts,js}\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "html-webpack-plugin": "^5.6.3",
+    "prettier": "^3.6.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "style-loader": "^4.0.0",
+    "typescript-eslint": "^8.38.0",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.31.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3"
+  }
 }

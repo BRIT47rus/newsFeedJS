@@ -27,8 +27,8 @@ export const App = () => {
   };
   React.useEffect(() => {
     fetch(
-      'https://frontend.karpovcourses.net/api/v2/ru/news/' +
-                categoryIDs[category as keyof typeof categoryIDs] || 'index'
+      'https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIDs[category as keyof typeof categoryIDs] ||
+        'index',
     )
       .then((res) => res.json())
       .then((response: NewsAPI) => {
@@ -41,12 +41,7 @@ export const App = () => {
       <div id="root"></div>
       <header className="header">
         <div className="container">
-          <Navigation
-            className="header-nav"
-            currentCategory={category}
-            onNavClick={onNavClick}
-            placement="header"
-          />
+          <Navigation className="header-nav" currentCategory={category} onNavClick={onNavClick} placement="header" />
         </div>
       </header>
       <main className="main">
@@ -58,30 +53,18 @@ export const App = () => {
             onArticleClick={onArticleClick}
           />
         ) : (
-          <Articles
-            articles={articles}
-            onArticleClick={onArticleClick}
-          />
+          <Articles articles={articles} onArticleClick={onArticleClick} />
         )}
       </main>
       <footer className="footer">
         <div className="container">
-          <Navigation
-            className="footer__nav"
-            currentCategory={category}
-            onNavClick={onNavClick}
-            placement="footer"
-          />
+          <Navigation className="footer__nav" currentCategory={category} onNavClick={onNavClick} placement="footer" />
 
           <div className="footer__column">
             <p className="footer__text">
-                            Все вопросы
-              <a
-                href="https://vk.com/vovirus"
-                className="footer__link"
-                target="_blank"
-              >
-                                Владимир
+              Все вопросы
+              <a href="https://vk.com/vovirus" className="footer__link" target="_blank">
+                Владимир
               </a>
             </p>
             <p className="footer__copy">@ 2024</p>

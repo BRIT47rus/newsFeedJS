@@ -1,6 +1,6 @@
 import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
 import eslintParserTypescript from '@typescript-eslint/parser';
-
+import prettier from 'prettier';
 export default [
     {
         files: ['**/*.ts', '**/*.tsx'],

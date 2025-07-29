@@ -2,29 +2,36 @@ import React, { FC } from 'react';
 import './Navigation.css';
 import logo from '../../image/logo.svg';
 import { categoryNames } from '../../utils';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 interface NavigationProps {
-  currentCategory: string;
   className?: string;
   placement: 'header' | 'footer';
 }
-export const Navigation: FC<NavigationProps> = ({ currentCategory, className = '', placement = 'header' }) => {
+export const Navigation: FC<NavigationProps> = ({ className = '', placement = 'header' }) => {
+  const location = useLocation();
   return (
     <nav className={`navigation grid  navigation--${placement} ${className} `}>
-      <a data-href="index" href="#" className="navigation__logo">
+      <NavLink to="/" className="navigation__logo">
         <img className="navigation__image" src={logo} alt="" />
-      </a>
+      </NavLink>
       <ul className="navigation__list">
         {['index', 'fashion', 'tech', 'sport', 'politics'].map((item) => {
           return (
             <li className="navigation__item" key={item}>
               <NavLink
-                className={({ isActive }) =>
-                  `navigation__link ${isActive ? 'navigation__link--active' : 'navigation__link'}`
-                }
-                to={item}
+                className={({ isActive }) => {
+                  let classNames = 'navigation__link';
+                  if (isActive) {
+                    classNames += ' navigation__link--active';
+                  } else if (item === 'index' && location.pathname === '/') {
+                    classNames += ' navigation__link--active';
+                  }
+
+                  return classNames;
+                }}
+                to={item === 'index' ? '/' : item}
               >
                 {categoryNames[item as keyof typeof categoryNames]}
               </NavLink>

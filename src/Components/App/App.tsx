@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { categoryIDs } from '../../utils';
 import { Articles } from '../Articles/Articles';
 import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
 import { NewsAPI } from '../../types';
-
 export const App = () => {
   const [articleId, setArticleId] = useState<number | null>(null);
   const [category, setCategory] = React.useState<string>('index');
@@ -37,7 +37,7 @@ export const App = () => {
   }, [category]);
 
   return (
-    <>
+    <BrowserRouter>
       <div id="root"></div>
       <header className="header">
         <div className="container">
@@ -45,16 +45,22 @@ export const App = () => {
         </div>
       </header>
       <main className="main">
-        {articleId !== null ? (
-          <ArticleItem
-            id={articleId}
-            categories={articles.categories}
-            sources={articles.sources}
-            onArticleClick={onArticleClick}
+        <Routes>
+          <Route path="/" element={<Articles articles={articles} onArticleClick={onArticleClick} />} />
+          <Route
+            path="/article"
+            element={
+              articleId !== null ? (
+                <ArticleItem
+                  id={articleId}
+                  categories={articles.categories}
+                  sources={articles.sources}
+                  onArticleClick={onArticleClick}
+                />
+              ) : null
+            }
           />
-        ) : (
-          <Articles articles={articles} onArticleClick={onArticleClick} />
-        )}
+        </Routes>
       </main>
       <footer className="footer">
         <div className="container">
@@ -71,6 +77,6 @@ export const App = () => {
           </div>
         </div>
       </footer>
-    </>
+    </BrowserRouter>
   );
 };

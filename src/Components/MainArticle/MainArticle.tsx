@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import './MainArticle.css';
 interface MainArticleProps {
   title: string;
@@ -10,16 +11,18 @@ interface MainArticleProps {
 }
 export const MainArticle: FC<MainArticleProps> = ({ title, image, category, description, source, onClick }) => {
   return (
-    <article className="main-article" onClick={onClick}>
-      <div className="main-article__image-container">
-        <img className="article-img main-article__img" src={image} alt="Фото новости" />
-      </div>
-      <div className="main-article__content">
-        <span className="article-category">{category}</span>
-        <h2 className="main-article__title">{title}</h2>
-        <p className="main-article__text">{description}</p>
-        <span className="article-source main-article__caption">{source}</span>
-      </div>
-    </article>
+    <Link to="/article">
+      <article className="main-article" onClick={onClick}>
+        <div className="main-article__image-container">
+          <img className="article-img main-article__img" src={image} alt="Фото новости" />
+        </div>
+        <div className="main-article__content">
+          <span className="article-category">{category}</span>
+          <h2 className="main-article__title">{title}</h2>
+          <p className="main-article__text">{description}</p>
+          <span className="article-source main-article__caption">{source}</span>
+        </div>
+      </article>
+    </Link>
   );
 };

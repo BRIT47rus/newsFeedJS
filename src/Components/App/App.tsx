@@ -37,7 +37,7 @@ export const App = () => {
   }, [category]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <div id="root"></div>
       <header className="header">
         <div className="container">
@@ -46,7 +46,7 @@ export const App = () => {
       </header>
       <main className="main">
         <Routes>
-          <Route path="/" element={<Articles articles={articles} onArticleClick={onArticleClick} />} />
+          <Route path="/" element={<Articles articles={articles} />} />
           <Route
             path="/article"
             element={

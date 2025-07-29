@@ -5,9 +5,8 @@ import { SmallArticle } from '../SmallaArticles/SmallArticle';
 import { NewsAPI } from '../../types';
 interface ArticlesProps {
   articles: NewsAPI;
-  onArticleClick: (id: number) => void;
 }
-export const Articles: FC<ArticlesProps> = ({ articles, onArticleClick }) => {
+export const Articles: FC<ArticlesProps> = ({ articles }) => {
   return (
     <section className="articles">
       <div className="container grid">
@@ -19,7 +18,6 @@ export const Articles: FC<ArticlesProps> = ({ articles, onArticleClick }) => {
 
               return (
                 <MainArticle
-                  onClick={() => onArticleClick(item.id)}
                   category={category ? category.name : ''}
                   image={item.image}
                   source={source?.name || ''}
@@ -34,15 +32,7 @@ export const Articles: FC<ArticlesProps> = ({ articles, onArticleClick }) => {
           {articles.items.slice(3, 12).map((item) => {
             const source = articles.sources.find(({ id }) => item.source_id === id);
 
-            return (
-              <SmallArticle
-                onClick={() => onArticleClick(item.id)}
-                date={item.date}
-                source={source?.name || ''}
-                key={item.title}
-                title={item.title}
-              />
-            );
+            return <SmallArticle date={item.date} source={source?.name || ''} key={item.title} title={item.title} />;
           })}
         </section>
       </div>

@@ -7,12 +7,11 @@ interface MainArticleProps {
   category: string;
   description: string;
   source: string;
-  onClick: (even: React.MouseEvent<HTMLElement>) => void;
 }
-export const MainArticle: FC<MainArticleProps> = ({ title, image, category, description, source, onClick }) => {
+export const MainArticle: FC<MainArticleProps> = ({ title, image, category, description, source }) => {
   return (
-    <Link to="/article">
-      <article className="main-article" onClick={onClick}>
+    <Link to="/article" className="main-article">
+      <article className="main-article__container">
         <div className="main-article__image-container">
           <img className="article-img main-article__img" src={image} alt="Фото новости" />
         </div>

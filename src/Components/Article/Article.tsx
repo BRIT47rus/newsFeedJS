@@ -6,25 +6,29 @@ import { ArticleItemAPI, IArticle, ICategories, ISource, RelatedArticlesAPI } fr
 import { beautifyDate } from '../../utils';
 import { useParams } from 'react-router-dom';
 
-interface Props {
-  categories: ICategories[];
-  sources: ISource[];
-}
-
-export const ArticleItem: FC<Props> = ({ categories, sources }) => {
+export const ArticleItem = () => {
   const { id } = useParams();
   const [articleItem, setArticleItem] = React.useState<ArticleItemAPI | null>(null);
   const [relatedArticles, setRelatedArticles] = React.useState<IArticle[] | null>(null);
+  const [categories, setCategories] = React.useState<ICategories[]>([]);
+  const [sources, setSources] = React.useState<ISource[]>([]);
   React.useEffect(() => {
     fetch(`https://frontend.karpovcourses.net/api/v2/news/full/${id}`)
       .then((response) => response.json())
       .then(setArticleItem);
+    Promise.all([
+      fetch(`https://frontend.karpovcourses.net/api/v2/news/related/${id}?count=9`).then((response) => response.json()),
+      fetch(`https://frontend.karpovcourses.net/api/v2/categories`).then((response) => response.json()),
+      fetch(`https://frontend.karpovcourses.net/api/v2/sources`).then((response) => response.json()),
+    ]).then((response) => {
+      const articles: RelatedArticlesAPI = response[0];
+      const categories: ICategories[] = response[1];
+      const sources: ISource[] = response[2];
 
-    fetch(`https://frontend.karpovcourses.net/api/v2/news/related/${id}?count=9`)
-      .then((response) => response.json())
-      .then((response: RelatedArticlesAPI) => {
-        setRelatedArticles(response.items);
-      });
+      setRelatedArticles(articles.items);
+      setCategories(categories);
+      setSources(sources);
+    });
   }, [id]);
 
   if (articleItem === null || relatedArticles === null) {

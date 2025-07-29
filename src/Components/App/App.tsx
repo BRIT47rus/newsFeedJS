@@ -6,12 +6,6 @@ import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
 import { NewsAPI } from '../../types';
 export const App = () => {
-  const [articles] = React.useState<NewsAPI>({
-    items: [],
-    categories: [],
-    sources: [],
-  });
-
   return (
     <BrowserRouter>
       <div id="root"></div>
@@ -22,10 +16,7 @@ export const App = () => {
       </header>
       <main className="main">
         <Routes>
-          <Route
-            path="/article/:id"
-            element={<ArticleItem categories={articles.categories} sources={articles.sources} />}
-          />
+          <Route path="/article/:id" element={<ArticleItem />} />
           <Route path="/:categoryId" element={<Articles />} />
           <Route path="/" element={<Articles />} />
         </Routes>

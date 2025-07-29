@@ -3,6 +3,7 @@ import './Navigation.css';
 import logo from '../../image/logo.svg';
 import { categoryNames } from '../../utils';
 import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface NavigationProps {
   currentCategory: string;
@@ -19,12 +20,14 @@ export const Navigation: FC<NavigationProps> = ({ currentCategory, className = '
         {['index', 'fashion', 'tech', 'sport', 'politics'].map((item) => {
           return (
             <li className="navigation__item" key={item}>
-              <Link
+              <NavLink
+                className={({ isActive }) =>
+                  `navigation__link ${isActive ? 'navigation__link--active' : 'navigation__link'}`
+                }
                 to={item}
-                className={`navigation__link ${currentCategory === item ? 'navigation__link--active' : ''}`}
               >
                 {categoryNames[item as keyof typeof categoryNames]}
-              </Link>
+              </NavLink>
             </li>
           );
         })}

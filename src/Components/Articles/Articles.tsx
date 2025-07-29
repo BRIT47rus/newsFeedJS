@@ -23,7 +23,8 @@ export const Articles: FC<ArticlesProps> = ({ articles }) => {
                   source={source?.name || ''}
                   description={item.description}
                   title={item.title}
-                  key={item.title}
+                  key={item.id}
+                  id={item.id}
                 />
               );
             })}
@@ -32,7 +33,15 @@ export const Articles: FC<ArticlesProps> = ({ articles }) => {
           {articles.items.slice(3, 12).map((item) => {
             const source = articles.sources.find(({ id }) => item.source_id === id);
 
-            return <SmallArticle date={item.date} source={source?.name || ''} key={item.title} title={item.title} />;
+            return (
+              <SmallArticle
+                date={item.date}
+                source={source?.name || ''}
+                key={item.id}
+                title={item.title}
+                id={item.id}
+              />
+            );
           })}
         </section>
       </div>

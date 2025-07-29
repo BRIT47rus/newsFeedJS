@@ -37,7 +37,7 @@ export const App = () => {
   }, [category]);
 
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter>
       <div id="root"></div>
       <header className="header">
         <div className="container">
@@ -48,7 +48,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Articles articles={articles} />} />
           <Route
-            path="/article"
+            path="/article/:id"
             element={
               articleId !== null ? (
                 <ArticleItem

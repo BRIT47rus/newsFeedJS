@@ -7,64 +7,34 @@ import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
 import { NewsAPI } from '../../types';
 export const App = () => {
-  const [articleId, setArticleId] = useState<number | null>(null);
-  const [category, setCategory] = React.useState<string>('index');
-  const [articles, setArticles] = React.useState<NewsAPI>({
+  const [category] = React.useState<string>('index');
+  const [articles] = React.useState<NewsAPI>({
     items: [],
     categories: [],
     sources: [],
   });
-  const onNavClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setArticleId(null);
-    const category = e.currentTarget.dataset.href;
-    if (category) {
-      setCategory(category);
-    }
-  };
-  const onArticleClick = (id: number) => {
-    setArticleId(id);
-  };
-  React.useEffect(() => {
-    fetch(
-      'https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIDs[category as keyof typeof categoryIDs] ||
-        'index',
-    )
-      .then((res) => res.json())
-      .then((response: NewsAPI) => {
-        setArticles(response);
-      });
-  }, [category]);
 
   return (
     <BrowserRouter>
       <div id="root"></div>
       <header className="header">
         <div className="container">
-          <Navigation className="header-nav" currentCategory={category} onNavClick={onNavClick} placement="header" />
+          <Navigation className="header-nav" currentCategory={category} placement="header" />
         </div>
       </header>
       <main className="main">
         <Routes>
-          <Route path="/" element={<Articles articles={articles} />} />
           <Route
             path="/article/:id"
-            element={
-              articleId !== null ? (
-                <ArticleItem
-                  id={articleId}
-                  categories={articles.categories}
-                  sources={articles.sources}
-                  onArticleClick={onArticleClick}
-                />
-              ) : null
-            }
+            element={<ArticleItem categories={articles.categories} sources={articles.sources} />}
           />
+          <Route path="/:categoryId" element={<Articles />} />
+          <Route path="/" element={<Articles />} />
         </Routes>
       </main>
       <footer className="footer">
         <div className="container">
-          <Navigation className="footer__nav" currentCategory={category} onNavClick={onNavClick} placement="footer" />
+          <Navigation className="footer__nav" currentCategory={category} placement="footer" />
 
           <div className="footer__column">
             <p className="footer__text">

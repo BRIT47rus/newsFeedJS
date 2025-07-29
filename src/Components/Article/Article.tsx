@@ -4,18 +4,17 @@ import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle'
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
 import { ArticleItemAPI, IArticle, ICategories, ISource, RelatedArticlesAPI } from '../../types';
 import { beautifyDate } from '../../utils';
+import { useParams } from 'react-router-dom';
 
 interface Props {
-  id: number;
   categories: ICategories[];
   sources: ISource[];
-  onArticleClick: (id: number) => void;
 }
 
-export const ArticleItem: FC<Props> = ({ id, categories, sources, onArticleClick }) => {
+export const ArticleItem: FC<Props> = ({ categories, sources }) => {
+  const { id } = useParams();
   const [articleItem, setArticleItem] = React.useState<ArticleItemAPI | null>(null);
   const [relatedArticles, setRelatedArticles] = React.useState<IArticle[] | null>(null);
-
   React.useEffect(() => {
     fetch(`https://frontend.karpovcourses.net/api/v2/news/full/${id}`)
       .then((response) => response.json())
@@ -74,11 +73,11 @@ export const ArticleItem: FC<Props> = ({ id, categories, sources, onArticleClick
               return (
                 <RelatedSmallArticle
                   key={item.id}
+                  id={item.id}
                   title={item.title}
                   category={category?.name || ''}
                   source={source?.name || ''}
                   image={item.image}
-                  onClick={() => onArticleClick(item.id)}
                 />
               );
             })}
@@ -98,12 +97,12 @@ export const ArticleItem: FC<Props> = ({ id, categories, sources, onArticleClick
               return (
                 <SingleLineTitleArticle
                   key={item.id}
+                  id={item.id}
                   image={item.image}
                   title={item.title}
                   text={item.description}
                   category={category?.name || ''}
                   source={source?.name || ''}
-                  onClick={() => onArticleClick(item.id)}
                 />
               );
             })}

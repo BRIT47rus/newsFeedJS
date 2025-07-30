@@ -15,9 +15,7 @@ export const Articles = () => {
   });
 
   useEffect(() => {
-    fetch(
-      'https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIDs[categoryId as keyof typeof categoryIDs] || '',
-    )
+    fetch('https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIDs[categoryId as keyof typeof categoryIDs])
       .then((res) => res.json())
       .then((response: NewsAPI) => {
         setArticles(response);

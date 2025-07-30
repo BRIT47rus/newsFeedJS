@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Article.css';
 import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle';
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
@@ -8,11 +8,11 @@ import { useParams } from 'react-router-dom';
 
 export const ArticleItem = () => {
   const { id } = useParams();
-  const [articleItem, setArticleItem] = React.useState<ArticleItemAPI | null>(null);
-  const [relatedArticles, setRelatedArticles] = React.useState<IArticle[] | null>(null);
-  const [categories, setCategories] = React.useState<ICategories[]>([]);
-  const [sources, setSources] = React.useState<ISource[]>([]);
-  React.useEffect(() => {
+  const [articleItem, setArticleItem] = useState<ArticleItemAPI | null>(null);
+  const [relatedArticles, setRelatedArticles] = useState<IArticle[] | null>(null);
+  const [categories, setCategories] = useState<ICategories[]>([]);
+  const [sources, setSources] = useState<ISource[]>([]);
+  useEffect(() => {
     fetch(`https://frontend.karpovcourses.net/api/v2/news/full/${id}`)
       .then((response) => response.json())
       .then(setArticleItem);
@@ -25,8 +25,8 @@ export const ArticleItem = () => {
       const categories: ICategories[] = response[1];
       const sources: ISource[] = response[2];
 
-      setRelatedArticles(articles.items);
       setCategories(categories);
+      setRelatedArticles(articles.items);
       setSources(sources);
     });
   }, [id]);
@@ -73,7 +73,7 @@ export const ArticleItem = () => {
             {relatedArticles.slice(3, 9).map((item) => {
               const category = categories.find(({ id }) => item.category_id === id);
               const source = sources.find(({ id }) => item.source_id === id);
-
+              console.log('side', item);
               return (
                 <RelatedSmallArticle
                   key={item.id}
@@ -88,28 +88,29 @@ export const ArticleItem = () => {
           </div>
         </div>
       </article>
-
+      {/* ---------------------------------------------------side panel------------------------------------------------------- */}
       <section className="article-page__related-articles">
         <div className="container">
           <h2 className="article-page__related-articles-title">Читайте также:</h2>
 
           <div className="grid article-page__related-articles-list">
-            {relatedArticles.slice(0, 3).map((item) => {
-              const category = categories.find(({ id }) => item.category_id === id);
-              const source = sources.find(({ id }) => item.source_id === id);
-
-              return (
-                <SingleLineTitleArticle
-                  key={item.id}
-                  id={item.id}
-                  image={item.image}
-                  title={item.title}
-                  text={item.description}
-                  category={category?.name || ''}
-                  source={source?.name || ''}
-                />
-              );
-            })}
+            {relatedArticles &&
+              relatedArticles.slice(0, 3).map((item) => {
+                const category = categories.find(({ id }) => item.category_id === id);
+                const source = sources.find(({ id }) => item.source_id === id);
+                console.log(item);
+                return (
+                  <SingleLineTitleArticle
+                    key={item.id}
+                    id={item.id}
+                    image={item.image}
+                    title={item.title}
+                    text={item.description}
+                    category={category?.name || ''}
+                    source={source?.name || ''}
+                  />
+                );
+              })}
           </div>
         </div>
       </section>

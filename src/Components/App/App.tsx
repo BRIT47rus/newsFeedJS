@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import { Articles } from '../Articles/Articles';
 import { ArticleItem } from '../Article/Article';
 import { Navigation } from '../Navigation/Navigation';
-import { NewsAPI } from '../../types';
 export const App = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
-    <BrowserRouter>
+    <>
       <div id="root"></div>
       <header className="header">
         <div className="container">
@@ -36,6 +40,6 @@ export const App = () => {
           </div>
         </div>
       </footer>
-    </BrowserRouter>
+    </>
   );
 };

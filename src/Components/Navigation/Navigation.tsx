@@ -31,7 +31,7 @@ export const Navigation: FC<NavigationProps> = ({ className = '', placement = 'h
 
                   return classNames;
                 }}
-                to={item === 'index' ? '/' : item}
+                to={`/${item}`}
               >
                 {categoryNames[item as keyof typeof categoryNames]}
               </NavLink>

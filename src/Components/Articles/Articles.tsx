@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './articles.css';
 import { MainArticle } from '../MainArticle/MainArticle';
@@ -14,7 +14,7 @@ export const Articles = () => {
     sources: [],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(
       'https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIDs[categoryId as keyof typeof categoryIDs] || '',
     )

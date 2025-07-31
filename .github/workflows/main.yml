@@ -33,11 +33,11 @@ jobs:
       - name: Run ESLint # Шаг 4: Запуск ESLint для проверки кода
         # Предполагается, что у вас есть скрипт 'lint' в package.json
         # или вы используете 'eslint .' напрямую
-        run: npm run lint || eslint . # Используйте команду, которая у вас настроена
+        run: npm run  eslint # Используйте команду, которая у вас настроена
 
       - name: Run Prettier check # Шаг 5: Запуск Prettier для проверки форматирования
         # Предполагается, что у вас есть скрипт 'format:check' или 'prettier --check .'
-        run: npm run format:check || prettier --check . # Используйте команду, которая у вас настроена
+        run: npm run  prettier # Используйте команду, которая у вас настроена
 
   deploy: # Это второе задание, на том же уровне отступа, что и 'build-and-test'
     needs: build-and-test # Это задание зависит от успешного завершения 'build-and-test'

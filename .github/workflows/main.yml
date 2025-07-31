@@ -1,0 +1,66 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test: # Это первое задание
+    runs-on: ubuntu-latest # Указываем операционную систему для Runner'а
+
+    steps:
+      - name: Checkout code # Шаг 1: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js # Шаг 2: Настройка окружения Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0' # Указываем версию Node.js, которую хотим использовать
+
+      - name: Install dependencies # Шаг 3: Установка зависимостей проекта
+        run: npm install
+
+      # - name: Run dev # Обычно не нужно запускать dev-сервер в CI/CD
+      #   run: npm run dev
+
+      - name: Run build # Шаг сборки проекта
+        run: npm run build
+
+      - name: Run ESLint # Шаг 4: Запуск ESLint для проверки кода
+        # Предполагается, что у вас есть скрипт 'lint' в package.json
+        # или вы используете 'eslint .' напрямую
+        run: npm run lint || eslint . # Используйте команду, которая у вас настроена
+
+      - name: Run Prettier check # Шаг 5: Запуск Prettier для проверки форматирования
+        # Предполагается, что у вас есть скрипт 'format:check' или 'prettier --check .'
+        run: npm run format:check || prettier --check . # Используйте команду, которая у вас настроена
+
+  deploy: # Это второе задание, на том же уровне отступа, что и 'build-and-test'
+    needs: build-and-test # Это задание зависит от успешного завершения 'build-and-test'
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0' # Исправлены лишние кавычки
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project # Повторная сборка, если предыдущее задание не передает артефакты
+        run: npm run build # Убедитесь, что эта команда создает файлы в './dist'
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist # Убедитесь, что это правильная папка для ваших собранных файлов

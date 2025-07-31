@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Run dev # Обычно не нужно запускать dev-сервер в CI/CD
-        run: npm run dev
+        run: npx webpack
 
       - name: Run ESLint # Шаг 4: Запуск ESLint для проверки кода
         # Предполагается, что у вас есть скрипт 'lint' в package.json

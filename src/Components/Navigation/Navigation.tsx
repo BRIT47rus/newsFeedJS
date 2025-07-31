@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import './Navigation.css';
 import logo from '../../image/logo.svg';
 import { categoryNames } from '../../utils';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 interface NavigationProps {

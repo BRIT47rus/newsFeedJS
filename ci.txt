@@ -22,7 +22,7 @@ jobs:
           node-version: '22.16.0' # Указываем версию Node.js, которую хотим использовать
 
       - name: Install dependencies # Шаг 3: Установка зависимостей проекта
-        run: npm ci
+        run: npm install
 
       # - name: Run dev # Обычно не нужно запускать dev-сервер в CI/CD
       #   run: npm run dev
@@ -54,7 +54,7 @@ jobs:
           node-version: '22.16.0' # Исправлены лишние кавычки
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build project # Повторная сборка, если предыдущее задание не передает артефакты
         run: npm run build # Убедитесь, что эта команда создает файлы в './dist'

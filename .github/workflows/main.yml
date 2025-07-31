@@ -1,4 +1,10 @@
 name: CI/CD Pipeline
+# --- ДОБАВЬТЕ ЭТОТ БЛОК ВВЕРХУ ФАЙЛА ---
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+# -------------------------------------
 
 on:
   push:
@@ -40,6 +46,7 @@ jobs:
     needs: build-and-test # Это задание зависит от успешного завершения 'build-and-test'
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    # --- ДОБАВЬТЕ ЭТОТ БЛОК ---
 
     steps:
       - name: Checkout code

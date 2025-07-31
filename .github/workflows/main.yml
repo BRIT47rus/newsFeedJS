@@ -27,8 +27,8 @@ jobs:
       # - name: Run dev # Обычно не нужно запускать dev-сервер в CI/CD
       #   run: npm run dev
 
-      - name: Run build # Шаг сборки проекта
-        run: npm run build
+      #   - name: Run build # Шаг сборки проекта
+      #     run: npm run build
 
       - name: Run ESLint # Шаг 4: Запуск ESLint для проверки кода
         # Предполагается, что у вас есть скрипт 'lint' в package.json

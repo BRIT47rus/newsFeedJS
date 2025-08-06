@@ -20,6 +20,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 const drawerWidth = 300;
 
 export const Admin = () => {
@@ -57,9 +58,32 @@ export const Admin = () => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
+
+        <Typography variant="h4" gutterBottom>
+          Редактирование статьи
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid size={7}>
+            <TextField label="Компания" variant="outlined" fullWidth />
+          </Grid>
+          <Grid size={7}>
+            <TextField label="Название статьи" variant="outlined" fullWidth />
+          </Grid>
+          <Grid size={7}>
+            <TextField label="Подводка" fullWidth multiline maxRows={4} variant="outlined" />
+          </Grid>
+          <Grid size={7}>
+            <TextField label="Текст" fullWidth multiline maxRows={12} variant="outlined" />
+          </Grid>
+          <Grid size={7}>
+            <TextField label="Изображение" variant="outlined" fullWidth />
+          </Grid>
+        </Grid>
+
         <Typography variant="h4" gutterBottom>
           Партнерские статьи
         </Typography>
+
         <Grid container spacing={2}>
           {[1, 2, 3, 4].map((i) => (
             <Grid size={3} key={i}>

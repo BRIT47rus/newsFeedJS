@@ -64,19 +64,31 @@ export const Admin = () => {
         </Typography>
         <Grid container spacing={2}>
           <Grid size={7}>
-            <TextField label="Компания" variant="outlined" fullWidth />
+            <Grid container spacing={2}>
+              <Grid size={12}>
+                <TextField label="Компания" variant="outlined" fullWidth />
+              </Grid>
+              <Grid size={12}>
+                <TextField label="Название статьи" variant="outlined" fullWidth />
+              </Grid>
+              <Grid size={12}>
+                <TextField label="Подводка" fullWidth multiline maxRows={4} variant="outlined" />
+              </Grid>
+              <Grid size={12}>
+                <TextField label="Текст" fullWidth multiline maxRows={12} variant="outlined" />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid size={7}>
-            <TextField label="Название статьи" variant="outlined" fullWidth />
-          </Grid>
-          <Grid size={7}>
-            <TextField label="Подводка" fullWidth multiline maxRows={4} variant="outlined" />
-          </Grid>
-          <Grid size={7}>
-            <TextField label="Текст" fullWidth multiline maxRows={12} variant="outlined" />
-          </Grid>
-          <Grid size={7}>
-            <TextField label="Изображение" variant="outlined" fullWidth />
+
+          <Grid size={5}>
+            <Card>
+              <CardActionArea>
+                <CardMedia component="img" height="140" image="https://placeimg.dev/600x600" alt="green iguana" />
+                <CardContent>
+                  <input type="file" />
+                </CardContent>
+              </CardActionArea>
+            </Card>
           </Grid>
         </Grid>
 

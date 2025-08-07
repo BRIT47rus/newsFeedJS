@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { InputErrorsType, InputNameType, InputRefsType, InputValueType } from './types';
+import { getErrors } from './helpers';
 
 export const AdminArticlesItem = () => {
   const { id }: { id?: string } = useParams();
@@ -20,7 +22,50 @@ export const AdminArticlesItem = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const inputsRefs: InputRefsType = {
+    'company-name': useRef<HTMLInputElement>(),
+    title: useRef<HTMLInputElement>(),
+    description: useRef<HTMLTextAreaElement>(),
+    text: useRef<HTMLTextAreaElement>(),
+    image: useRef<HTMLInputElement>(),
+  };
+  const [inputFile, setInputFile] = useState<File | null>(null);
+  const [inputErrors, setInputErrors] = useState<InputErrorsType>({
+    'company-name': '',
+    description: '',
+    text: '',
+    title: '',
+    image: '',
+  });
+  const [inputValues, setInputValues] = useState<InputValueType>({
+    'company-name': '',
+    description: '',
+    text: '',
+    title: '',
+    image: '',
+  });
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const input = event.currentTarget;
+    const name = input.name;
+    const value = input.value;
+    setInputValues({
+      ...inputValues,
+      [name]: value,
+    });
+  };
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData();
+    Object.entries(inputValues).forEach(([name, value]) => {
+      if (name === 'image') {
+        data.append(name, inputFile || new File([], ''));
+      } else {
+        data.append(name, value);
+      }
+    });
+    const errors = await getErrors(Array.from(data.entries()) as [InputNameType, FormDataEntryValue][]);
+  };
+  //--------------------3.6 3/26
   return (
     <Box component="form" noValidate>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>

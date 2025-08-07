@@ -76,4 +76,5 @@ export const getErrors = async (data: [InputNameType, FormDataEntryValue][]) => 
         break;
     }
   }
+  return errors;
 };

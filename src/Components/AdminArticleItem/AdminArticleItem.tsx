@@ -1,8 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
 import Box from '@mui/material/Box';
-
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -24,7 +22,7 @@ export const AdminArticlesItem = () => {
   };
 
   return (
-    <>
+    <Box component="form" noValidate>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid size={9}>
           <Typography variant="h4" gutterBottom>
@@ -76,6 +74,6 @@ export const AdminArticlesItem = () => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };

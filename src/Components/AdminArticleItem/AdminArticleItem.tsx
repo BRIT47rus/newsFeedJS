@@ -88,7 +88,7 @@ export const AdminArticlesItem = () => {
       return;
     }
     const file = files[0];
-    if (file.size === 0 || !file.type.startsWith('/image')) {
+    if (file.size === 0 || !file.type.startsWith('image/')) {
       return;
     }
     setInputFile(file);
@@ -111,7 +111,7 @@ export const AdminArticlesItem = () => {
         </Grid>
         <Grid size={3}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button variant="contained" color="success" sx={{ marginRight: 1 }}>
+            <Button type="submit" variant="contained" color="success" sx={{ marginRight: 1 }}>
               Сохранить
             </Button>
 
@@ -144,6 +144,7 @@ export const AdminArticlesItem = () => {
                 label="Компания"
                 variant="outlined"
                 fullWidth
+                name="company-name"
                 value={inputValues['company-name']}
                 onChange={onChangeInput}
                 ref={inputsRefs['company-name']}
@@ -156,6 +157,7 @@ export const AdminArticlesItem = () => {
                 label="Название статьи"
                 variant="outlined"
                 fullWidth
+                name="title"
                 value={inputValues.title}
                 onChange={onChangeInput}
                 ref={inputsRefs.title}
@@ -168,6 +170,7 @@ export const AdminArticlesItem = () => {
                 label="Подводка"
                 fullWidth
                 multiline
+                name="description"
                 maxRows={4}
                 variant="outlined"
                 value={inputValues.description}
@@ -182,6 +185,7 @@ export const AdminArticlesItem = () => {
                 label="Текст"
                 fullWidth
                 multiline
+                name="text"
                 maxRows={12}
                 variant="outlined"
                 value={inputValues.text}
@@ -197,11 +201,9 @@ export const AdminArticlesItem = () => {
                   <CardMedia component="img" height="140" image={inputValues.image} />
                   <CardContent>
                     <TextField
+                      name="image"
                       type="file"
-                      label="Изображение"
                       fullWidth
-                      multiline
-                      maxRows={12}
                       variant="outlined"
                       onChange={showFile}
                       ref={inputsRefs.image}

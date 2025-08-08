@@ -44,36 +44,36 @@ export const getErrors = async (data: [InputNameType, FormDataEntryValue][]) => 
       }
     }
     switch (name) {
-      case 'title': {
-        if (typeof value !== 'string') {
-          break;
-        }
-        if (value.length > 20) {
-          errors[name] = 'Название должно быть до 20 символов';
-        }
+    case 'title': {
+      if (typeof value !== 'string') {
         break;
       }
-      case 'description': {
-        if (typeof value !== 'string') {
-          break;
-        }
-        if (value.length > 140) {
-          errors[name] = 'Название должно быть до 140 символов';
-        }
+      if (value.length > 20) {
+        errors[name] = 'Название должно быть до 20 символов';
+      }
+      break;
+    }
+    case 'description': {
+      if (typeof value !== 'string') {
         break;
       }
-      case 'text': {
-        if (typeof value !== 'string') {
-          break;
-        }
-        if (value.length < 140) {
-          errors[name] = 'Название должно быть больше 140 символов';
-        }
+      if (value.length > 140) {
+        errors[name] = 'Название должно быть до 140 символов';
+      }
+      break;
+    }
+    case 'text': {
+      if (typeof value !== 'string') {
         break;
       }
+      if (value.length < 140) {
+        errors[name] = 'Название должно быть больше 140 символов';
+      }
+      break;
+    }
 
-      default:
-        break;
+    default:
+      break;
     }
   }
   return errors;

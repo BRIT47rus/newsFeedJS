@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { InputErrorsType, InputNameType, InputRefsType, InputValueType } from './types';
 import { getErrors, getImage } from './helpers';
+import { Card, CardActionArea, CardMedia, CardContent } from '@mui/material';
 
 export const AdminArticlesItem = () => {
   const { id }: { id?: string } = useParams();
@@ -23,11 +24,11 @@ export const AdminArticlesItem = () => {
     setAnchorEl(null);
   };
   const inputsRefs: InputRefsType = {
-    'company-name': useRef<HTMLInputElement>(null),
-    title: useRef<HTMLInputElement>(null),
-    description: useRef<HTMLTextAreaElement>(null),
-    text: useRef<HTMLTextAreaElement>(null),
-    image: useRef<HTMLInputElement>(null),
+    'company-name': useRef<HTMLInputElement | null>(null),
+    title: useRef<HTMLInputElement | null>(null),
+    description: useRef<HTMLTextAreaElement | null>(null),
+    text: useRef<HTMLTextAreaElement | null>(null),
+    image: useRef<HTMLInputElement | null>(null),
   };
   const [inputFile, setInputFile] = useState<File | null>(null);
   const [inputErrors, setInputErrors] = useState<InputErrorsType>({
@@ -66,7 +67,7 @@ export const AdminArticlesItem = () => {
     const errors = await getErrors(Array.from(data.entries()) as [InputNameType, FormDataEntryValue][]);
     const errorsEntries = Object.entries(errors);
     setInputErrors(errors);
-    const errorInput = errorsEntries.find(([_, value]) => value.length > 0);
+    const errorInput = errorsEntries.find(([, value]) => value.length > 0);
     if (errorInput) {
       const name = errorInput[0] as InputNameType;
       const inputRef = inputsRefs[name];
@@ -101,7 +102,7 @@ export const AdminArticlesItem = () => {
 
   //--------------------3.6 3/26
   return (
-    <Box component="form" noValidate>
+    <Box component="form" noValidate onSubmit={onSubmit}>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid size={9}>
           <Typography variant="h4" gutterBottom>
@@ -139,16 +140,77 @@ export const AdminArticlesItem = () => {
         <Grid size={7}>
           <Grid container spacing={2}>
             <Grid size={12}>
-              <TextField label="Компания" variant="outlined" fullWidth />
+              <TextField
+                label="Компания"
+                variant="outlined"
+                fullWidth
+                value={inputValues['company-name']}
+                onChange={onChangeInput}
+                ref={inputsRefs['company-name']}
+                error={Boolean(inputErrors['company-name'].length)}
+                helperText={inputErrors['company-name']}
+              />
             </Grid>
             <Grid size={12}>
-              <TextField label="Название статьи" variant="outlined" fullWidth />
+              <TextField
+                label="Название статьи"
+                variant="outlined"
+                fullWidth
+                value={inputValues.title}
+                onChange={onChangeInput}
+                ref={inputsRefs.title}
+                error={Boolean(inputErrors.title.length)}
+                helperText={inputErrors.title}
+              />
             </Grid>
             <Grid size={12}>
-              <TextField label="Подводка" fullWidth multiline maxRows={4} variant="outlined" />
+              <TextField
+                label="Подводка"
+                fullWidth
+                multiline
+                maxRows={4}
+                variant="outlined"
+                value={inputValues.description}
+                onChange={onChangeInput}
+                ref={inputsRefs.description}
+                error={Boolean(inputErrors.description.length)}
+                helperText={inputErrors.description}
+              />
             </Grid>
             <Grid size={12}>
-              <TextField label="Текст" fullWidth multiline maxRows={12} variant="outlined" />
+              <TextField
+                label="Текст"
+                fullWidth
+                multiline
+                maxRows={12}
+                variant="outlined"
+                value={inputValues.text}
+                onChange={onChangeInput}
+                ref={inputsRefs.text}
+                error={Boolean(inputErrors.text.length)}
+                helperText={inputErrors.text}
+              />
+            </Grid>
+            <Grid size={5}>
+              <Card>
+                <CardActionArea>
+                  <CardMedia component="img" height="140" image={inputValues.image} />
+                  <CardContent>
+                    <TextField
+                      type="file"
+                      label="Изображение"
+                      fullWidth
+                      multiline
+                      maxRows={12}
+                      variant="outlined"
+                      onChange={showFile}
+                      ref={inputsRefs.image}
+                      error={Boolean(inputErrors.image.length)}
+                      helperText={inputErrors.image}
+                    />
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </Grid>
           </Grid>
         </Grid>

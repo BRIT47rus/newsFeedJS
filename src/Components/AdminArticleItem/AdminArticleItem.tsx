@@ -10,7 +10,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { InputErrorsType, InputNameType, InputRefsType, InputValueType } from './types';
-import { getErrors } from './helpers';
+import { getErrors, getImage } from './helpers';
 
 export const AdminArticlesItem = () => {
   const { id }: { id?: string } = useParams();
@@ -23,11 +23,11 @@ export const AdminArticlesItem = () => {
     setAnchorEl(null);
   };
   const inputsRefs: InputRefsType = {
-    'company-name': useRef<HTMLInputElement>(),
-    title: useRef<HTMLInputElement>(),
-    description: useRef<HTMLTextAreaElement>(),
-    text: useRef<HTMLTextAreaElement>(),
-    image: useRef<HTMLInputElement>(),
+    'company-name': useRef<HTMLInputElement>(null),
+    title: useRef<HTMLInputElement>(null),
+    description: useRef<HTMLTextAreaElement>(null),
+    text: useRef<HTMLTextAreaElement>(null),
+    image: useRef<HTMLInputElement>(null),
   };
   const [inputFile, setInputFile] = useState<File | null>(null);
   const [inputErrors, setInputErrors] = useState<InputErrorsType>({
@@ -64,7 +64,41 @@ export const AdminArticlesItem = () => {
       }
     });
     const errors = await getErrors(Array.from(data.entries()) as [InputNameType, FormDataEntryValue][]);
+    const errorsEntries = Object.entries(errors);
+    setInputErrors(errors);
+    const errorInput = errorsEntries.find(([_, value]) => value.length > 0);
+    if (errorInput) {
+      const name = errorInput[0] as InputNameType;
+      const inputRef = inputsRefs[name];
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+      return;
+    }
+    fetch('https://httpbin.org/post', {
+      method: 'POST',
+      body: data,
+    });
   };
+
+  const showFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.currentTarget.files;
+    if (files === null || !files.length) {
+      return;
+    }
+    const file = files[0];
+    if (file.size === 0 || !file.type.startsWith('/image')) {
+      return;
+    }
+    setInputFile(file);
+    getImage(file).then((image) => {
+      setInputValues({
+        ...inputValues,
+        image: image.src,
+      });
+    });
+  };
+
   //--------------------3.6 3/26
   return (
     <Box component="form" noValidate>

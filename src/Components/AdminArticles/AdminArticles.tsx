@@ -42,7 +42,7 @@ export const AdminArticles = () => {
         {articles.map((i) => (
           <Grid size={3} key={i.id}>
             <Card>
-              <CardActionArea component={Link} to={`/admin/edit/:${i.id}`}>
+              <CardActionArea component={Link} to={`/admin/edit/${i.id}`}>
                 <CardMedia component="img" height="140" image={i.image} alt={i.title} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">

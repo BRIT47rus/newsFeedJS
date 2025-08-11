@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -11,11 +11,13 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { InputErrorsType, InputNameType, InputRefsType, InputValueType } from './types';
 import { getErrors, getImage } from './helpers';
-import { Card, CardActionArea, CardMedia, CardContent } from '@mui/material';
+import { Card, CardActionArea, CardMedia, CardContent, Snackbar } from '@mui/material';
+import { createPartnerArticle, deletePartnerArticle, getParnerArticle, updatePartnerArticle } from '../api';
 
 export const AdminArticlesItem = () => {
   const { id }: { id?: string } = useParams();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [snackBarMessage, setSnackBarMessage] = useState<string | null>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -23,6 +25,10 @@ export const AdminArticlesItem = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const closeSnackBar = () => {
+    setSnackBarMessage(null);
+  };
+
   const inputsRefs: InputRefsType = {
     'company-name': useRef<HTMLInputElement | null>(null),
     title: useRef<HTMLInputElement | null>(null),
@@ -76,10 +82,34 @@ export const AdminArticlesItem = () => {
       }
       return;
     }
-    fetch('https://httpbin.org/post', {
-      method: 'POST',
-      body: data,
-    });
+
+    if (id) {
+      updatePartnerArticle(id, inputValues)
+        .then(() => {
+          setSnackBarMessage('✅ Статья обновлена');
+        })
+        .catch((error) => {
+          setSnackBarMessage(`❌ ${error.message}`);
+        });
+    } else {
+      createPartnerArticle(inputValues)
+        .then(() => {
+          setSnackBarMessage('✅ Статья создана');
+        })
+        .catch((error) => {
+          setSnackBarMessage(`❌ ${error.message}`);
+        });
+    }
+  };
+  const deleteArticle = async () => {
+    if (!id) return;
+    deletePartnerArticle(id)
+      .then(() => {
+        setSnackBarMessage('✅ Статья удалена');
+      })
+      .catch((error) => {
+        setSnackBarMessage(`❌ ${error.message}`);
+      });
   };
 
   const showFile = (event: ChangeEvent<HTMLInputElement>) => {
@@ -100,13 +130,29 @@ export const AdminArticlesItem = () => {
     });
   };
 
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    (async () => {
+      const data = await getParnerArticle(id);
+      setInputValues({
+        'company-name': data['company-name'],
+        description: data.description,
+        text: data.text,
+        title: data.title,
+        image: data.image,
+      });
+    })();
+  }, [id]);
+
   //--------------------3.6 3/26
   return (
     <Box component="form" noValidate onSubmit={onSubmit}>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid size={9}>
           <Typography variant="h4" gutterBottom>
-            {id ? ' Редактирование статьи' : 'Новая статья'}
+            {id ? `Редактирование статьи ${inputValues.title}` : 'Новая статья'}
           </Typography>
         </Grid>
         <Grid size={3}>
@@ -128,7 +174,7 @@ export const AdminArticlesItem = () => {
                   <MoreVertIcon />
                 </IconButton>
                 <Menu id="long-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-                  <MenuItem onClick={handleClose}>Удалить статью</MenuItem>
+                  <MenuItem onClick={deleteArticle}>Удалить статью</MenuItem>
                 </Menu>
               </div>
             )}
@@ -217,6 +263,13 @@ export const AdminArticlesItem = () => {
           </Grid>
         </Grid>
       </Grid>
+
+      <Snackbar
+        open={typeof snackBarMessage === 'string'}
+        autoHideDuration={6000}
+        onClose={closeSnackBar}
+        message={snackBarMessage}
+      />
     </Box>
   );
 };

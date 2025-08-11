@@ -12,7 +12,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { InputErrorsType, InputNameType, InputRefsType, InputValueType } from './types';
 import { getErrors, getImage } from './helpers';
 import { Card, CardActionArea, CardMedia, CardContent, Snackbar } from '@mui/material';
-import { createPartnerArticle, deletePartnerArticle, getParnerArticle, updatePartnerArticle } from '../api';
+import { createPartnerArticle, deletePartnerArticle, getParnerArticle, updatePartnerArticle, uploadFile } from '../api';
 
 export const AdminArticlesItem = () => {
   const { id }: { id?: string } = useParams();
@@ -36,7 +36,6 @@ export const AdminArticlesItem = () => {
     text: useRef<HTMLTextAreaElement | null>(null),
     image: useRef<HTMLInputElement | null>(null),
   };
-  const [inputFile, setInputFile] = useState<File | null>(null);
   const [inputErrors, setInputErrors] = useState<InputErrorsType>({
     'company-name': '',
     description: '',
@@ -64,11 +63,7 @@ export const AdminArticlesItem = () => {
     event.preventDefault();
     const data = new FormData();
     Object.entries(inputValues).forEach(([name, value]) => {
-      if (name === 'image') {
-        data.append(name, inputFile || new File([], ''));
-      } else {
-        data.append(name, value);
-      }
+      data.append(name, value);
     });
     const errors = await getErrors(Array.from(data.entries()) as [InputNameType, FormDataEntryValue][]);
     const errorsEntries = Object.entries(errors);
@@ -112,7 +107,7 @@ export const AdminArticlesItem = () => {
       });
   };
 
-  const showFile = (event: ChangeEvent<HTMLInputElement>) => {
+  const showFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.currentTarget.files;
     if (files === null || !files.length) {
       return;
@@ -121,13 +116,25 @@ export const AdminArticlesItem = () => {
     if (file.size === 0 || !file.type.startsWith('image/')) {
       return;
     }
-    setInputFile(file);
-    getImage(file).then((image) => {
+    // setInputFile(file);
+    const img = await getImage(file);
+    if (img.width < 200 || img.height < 200) {
+      setInputErrors({
+        ...inputErrors,
+        image: 'Изображение ментше 200 х 200',
+      });
+      return;
+    }
+    try {
+      const url = await uploadFile(file);
       setInputValues({
         ...inputValues,
-        image: image.src,
+        image: url,
       });
-    });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setSnackBarMessage(`❌ ${error.message}`);
+    }
   };
 
   useEffect(() => {

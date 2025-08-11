@@ -1,17 +1,18 @@
 import { initializeApp } from 'firebase/app';
 import { collection, getDocs, getFirestore, addDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { IPartnerArticle } from '../types';
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 export const initializeApi = () => {
   initializeApp({
-    apiKey: 'AIzaSyBeKOxloACETNZOR9gFQd5RrvVcBYhC0d0',
-    authDomain: 'neewsbrit.firebaseapp.com',
-    projectId: 'neewsbrit',
-    storageBucket: 'neewsbrit.firebasestorage.app',
-    messagingSenderId: '957123495828',
-    appId: '1:957123495828:web:322cfb2f38755a556e3181',
+    apiKey: 'AIzaSyAJYq-evj4FZq5qTylzJQfwqO2CD24r3c8',
+    authDomain: 'news-brit.firebaseapp.com',
+    projectId: 'news-brit',
+    storageBucket: 'news-brit.firebasestorage.app',
+    messagingSenderId: '62898230727',
+    appId: '1:62898230727:web:2296002b48b3fe2e54b5e2',
   });
   getFirestore();
+  getStorage();
 };
 const partnersPostsCollection = 'partners-posts';
 
@@ -75,6 +76,17 @@ export const deletePartnerArticle = async (id: string) => {
   const dataRef = doc(db, partnersPostsCollection, id);
   try {
     await deleteDoc(dataRef);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+export const uploadFile = async (file: File): Promise<string> => {
+  const storage = getStorage();
+  const storageRef = ref(storage, `${file.name}-${Date.now()}`);
+  try {
+    const snapshot = await uploadBytes(storageRef, file);
+    const url = getDownloadURL(snapshot.ref);
+    return url;
   } catch (error) {
     return Promise.reject(error);
   }

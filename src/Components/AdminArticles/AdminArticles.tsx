@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 
@@ -11,7 +11,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { IPartnerArticle } from '../../types';
+import { getPartnersArticles } from '../api';
 export const AdminArticles = () => {
+  const [articles, setArticles] = useState<IPartnerArticle[]>([]);
+  useEffect(() => {
+    (async () => {
+      const articles = await getPartnersArticles();
+      setArticles(articles);
+    })();
+  }, []);
   return (
     <>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
@@ -30,18 +39,17 @@ export const AdminArticles = () => {
       </Grid>
 
       <Grid container spacing={2}>
-        {[1, 2, 3, 4].map((i) => (
-          <Grid size={3} key={i}>
+        {articles.map((i) => (
+          <Grid size={3} key={i.id}>
             <Card>
-              <CardActionArea component={Link} to={`/admin/edit/:${i}`}>
-                <CardMedia component="img" height="140" image="https://placeimg.dev/600x600" alt="green iguana" />
+              <CardActionArea component={Link} to={`/admin/edit/:${i.id}`}>
+                <CardMedia component="img" height="140" image={i.image} alt={i.title} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                    {i.title}
                   </Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
-                    continents except Antarctica
+                    {i.description}
                   </Typography>
                 </CardContent>
               </CardActionArea>

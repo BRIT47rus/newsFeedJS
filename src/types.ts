@@ -37,3 +37,12 @@ export interface IArticle {
   source_id: number;
   category_id: number;
 }
+
+export interface IPartnerArticle {
+  id: string;
+  title: string;
+  description: string;
+  text: string;
+  'company-name': string;
+  image: string;
+}

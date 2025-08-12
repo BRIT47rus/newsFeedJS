@@ -60,6 +60,9 @@ export const Articles = () => {
             })}
         </section>
       </div>
+      {/* <div className="articles__partner-article">
+        <PartnerArticle />
+      </div> */}
     </section>
   );
 };

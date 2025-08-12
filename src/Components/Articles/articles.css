@@ -5,3 +5,7 @@
 .articles__big-column {
   grid-column: span 9;
 }
+
+.articles__partner-article {
+  margin: 50px 0;
+}

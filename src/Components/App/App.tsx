@@ -8,6 +8,7 @@ import { AdminPage } from '../AdminePage/AdminePage';
 import { AdminArticles } from '../AdminArticles/AdminArticles';
 import { AdminArticlesItem } from '../AdminArticleItem/AdminArticleItem';
 import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
+import { LoginContainer } from '../features/login/LoginContainer';
 export const App = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -17,7 +18,15 @@ export const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/login" element={<div>login</div>} />
+        <Route
+          path="/login"
+          element={
+            <Page>
+              <LoginContainer />
+            </Page>
+          }
+        />
+
         <Route
           path="/admin"
           element={

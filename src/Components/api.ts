@@ -1,9 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { collection, getDocs, getFirestore, addDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { IPartnerArticle } from '../types';
+import { getAuth } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 export const initializeApi = () => {
-  initializeApp({
+  const firebaseApi = initializeApp({
     apiKey: 'AIzaSyAJYq-evj4FZq5qTylzJQfwqO2CD24r3c8',
     authDomain: 'news-brit.firebaseapp.com',
     projectId: 'news-brit',
@@ -11,8 +12,10 @@ export const initializeApi = () => {
     messagingSenderId: '62898230727',
     appId: '1:62898230727:web:2296002b48b3fe2e54b5e2',
   });
-  getFirestore();
-  getStorage();
+  getAuth(firebaseApi);
+  getFirestore(firebaseApi);
+  getStorage(firebaseApi);
+  return firebaseApi;
 };
 const partnersPostsCollection = 'partners-posts';
 

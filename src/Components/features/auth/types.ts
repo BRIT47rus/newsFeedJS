@@ -6,6 +6,7 @@ export type TAuthContext = {
   isAuth: boolean | null;
   user: User | null;
   logginWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
+  logOut: () => void;
 };
 export interface AuthContextProviderProps {
   children: ReactNode;

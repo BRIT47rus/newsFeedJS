@@ -1,11 +1,12 @@
 import React, { createContext, FC, useContext, useEffect, useState } from 'react';
 import { AuthContextProviderProps, TAuthContext } from './types';
-import { getAuth, User, signInWithEmailAndPassword, browserLocalPersistence } from 'firebase/auth';
+import { signOut, getAuth, User, signInWithEmailAndPassword, browserLocalPersistence } from 'firebase/auth';
 
 const authContext = createContext<TAuthContext>({
   isAuth: null,
   user: null,
   logginWithEmailAndPassword: () => Promise.reject({}),
+  logOut: () => undefined,
 });
 export const useAuth = (): TAuthContext => useContext<TAuthContext>(authContext);
 
@@ -36,5 +37,8 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, fi
       }
     });
   }, []);
-  return <authContext.Provider value={{ logginWithEmailAndPassword, isAuth, user }}>{children}</authContext.Provider>;
+  const logOut = () => signOut(auth);
+  return (
+    <authContext.Provider value={{ logOut, logginWithEmailAndPassword, isAuth, user }}>{children}</authContext.Provider>
+  );
 };

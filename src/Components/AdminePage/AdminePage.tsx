@@ -12,21 +12,32 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ArticleIcon from '@mui/icons-material/Article';
-
+import LogoutIcon from '@mui/icons-material/Logout';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import { useAuth } from '../features/auth/AuthContextProvier';
 
 const drawerWidth = 300;
 
 export const AdminPage = ({ children }: { children: ReactNode }) => {
+  const { logOut } = useAuth();
+  const history = useNavigate();
+  const onLogoutClick = () => {
+    logOut();
+    history('/login');
+  };
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Админ панель
           </Typography>
+          <IconButton color="inherit" onClick={onLogoutClick}>
+            <LogoutIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

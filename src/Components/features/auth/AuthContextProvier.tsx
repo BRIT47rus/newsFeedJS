@@ -2,16 +2,30 @@ import React, { createContext, FC, useContext, useEffect, useState } from 'react
 import { AuthContextProviderProps, TAuthContext } from './types';
 import { getAuth, User, signInWithEmailAndPassword, browserLocalPersistence } from 'firebase/auth';
 
-const authContext = createContext<TAuthContext>({ isAuth: null, user: null });
+const authContext = createContext<TAuthContext>({
+  isAuth: null,
+  user: null,
+  logginWithEmailAndPassword: () => Promise.reject({}),
+});
 export const useAuth = (): TAuthContext => useContext<TAuthContext>(authContext);
 
 export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, firebaseApp }) => {
   const [isAuth, setIsAuth] = useState<TAuthContext['isAuth']>(null);
   const [user, setUser] = useState<User | null>(null);
   const [auth] = useState(getAuth(firebaseApp));
+  const logginWithEmailAndPassword = (email: string, pass: string) =>
+    signInWithEmailAndPassword(auth, email, pass)
+      .then((result) => {
+        //todo
+        return result;
+      })
+      .catch((e) => {
+        console.log('Loggin error');
+        throw e;
+      });
+
   useEffect(() => {
     auth.setPersistence(browserLocalPersistence);
-    signInWithEmailAndPassword(auth, 'vovirus2@inbox.ru', 'Farvater13');
     auth.onAuthStateChanged((user) => {
       if (user) {
         setIsAuth(true);
@@ -22,6 +36,5 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, fi
       }
     });
   }, []);
-  return <authContext.Provider value={{ isAuth, user }}>{children}</authContext.Provider>;
+  return <authContext.Provider value={{ logginWithEmailAndPassword, isAuth, user }}>{children}</authContext.Provider>;
 };
-//46/24  5/1

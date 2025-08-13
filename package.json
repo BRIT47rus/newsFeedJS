@@ -2,7 +2,7 @@
   "name": "news",
   "version": "1.0.0",
   "scripts": {
-    "dev": "webpack serve",
+    "dev": "eslint --ext .ts,.tsx,.js ./ --fix && webpack serve ",
     "build": "webpack",
     "eslint": "eslint --ext .ts,.tsx,.js ./ --fix",
     "prettier": "prettier --write \"{**/*,*}.{tsx,ts,js}\"",

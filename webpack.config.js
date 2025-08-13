@@ -34,6 +34,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+    // alias: {
+    //   '@components': path.resolve('.src/Components'),
+    // },
   },
 
   plugins: [

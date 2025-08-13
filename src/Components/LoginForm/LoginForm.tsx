@@ -8,14 +8,14 @@ export type TLoginField = {
   error?: boolean;
   helper?: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 type TProps = {
   className?: string;
   email: TLoginField;
   password: TLoginField;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export const LoginForm: FC<TProps> = ({ className, email, password, onSubmit }) => {

@@ -36,6 +36,7 @@ export const LoginContainer = () => {
   const history = useNavigate();
   const [authErr, setAuthError] = useState('');
   const { logginWithEmailAndPassword } = useAuth();
+
   const [emailState, dispatchEmail] = useReducer(reducer, {
     name: 'email',
     value: '',

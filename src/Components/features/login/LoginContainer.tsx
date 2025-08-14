@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LoginIcon from '@mui/icons-material/Login';
-import { ProviderId } from 'firebase/auth';
+import { ProviderId, UserCredential } from 'firebase/auth';
 type TLoginFieldState = Omit<TLoginField, 'onChange'>;
 type TAction = {
   type: 'change' | 'error';
@@ -62,6 +62,15 @@ export const LoginContainer = () => {
     name: 'password',
     value: '',
   });
+  const proccessLogin = (promise: Promise<UserCredential>): void => {
+    promise
+      .then(() => {
+        history('/admin');
+      })
+      .catch((errr) => {
+        setAuthError(errr.message || 'error');
+      });
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,26 +84,14 @@ export const LoginContainer = () => {
       dispatchPasswordState({ type: 'error', value: 'Длина пароля меньше 7 символов' });
     }
     if (isValid) {
-      logginWithEmailAndPassword(emailState.value, passwordState.value)
-        .then(() => {
-          history('/admin');
-        })
-        .catch((errr) => {
-          setAuthError(errr.message || 'error');
-        });
+      proccessLogin(logginWithEmailAndPassword(emailState.value, passwordState.value));
     }
   };
   const onOAuthClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const dataset = (e.target as HTMLElement)?.closest<HTMLLIElement>('.login-oaut-container__item')?.dataset;
     if (dataset?.providerid) {
-      logInWithPopup(dataset?.providerid)
-        .then(() => {
-          history('/admin');
-        })
-        .catch((errr) => {
-          setAuthError(errr.message || 'error');
-        });
+      proccessLogin(logInWithPopup(dataset?.providerid));
     }
   };
 

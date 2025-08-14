@@ -10,6 +10,7 @@ import {
   ProviderId,
   GoogleAuthProvider,
   GithubAuthProvider,
+  UserCredential,
 } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
@@ -63,6 +64,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, fi
     const db = getFirestore(firebase);
     return await getDoc(doc(db, '/internal/auth'));
   };
+
   useEffect(() => {
     if (!auth) {
       return;

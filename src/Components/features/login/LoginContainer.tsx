@@ -2,10 +2,13 @@ import React, { useReducer, useState } from 'react';
 import './LoginContainer.css';
 import { LoginForm, TLoginField } from '../../LoginForm/LoginForm';
 import { validateEmail } from './utils';
-import { useAuth } from '../auth/AuthContextProvier';
+import { ALLOWED_OAUTH_PROVIDERS, useAuth } from '../auth/AuthContextProvier';
 import { Link, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import GoogleIcon from '@mui/icons-material/Google';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LoginIcon from '@mui/icons-material/Login';
+import { ProviderId } from 'firebase/auth';
 type TLoginFieldState = Omit<TLoginField, 'onChange'>;
 type TAction = {
   type: 'change' | 'error';
@@ -13,24 +16,37 @@ type TAction = {
 };
 const reducer = (state: TLoginFieldState, action: TAction): TLoginFieldState => {
   switch (action.type) {
-    case 'change':
-      return {
-        ...state,
-        value: action.value,
-        error: false,
-        helper: '',
-      };
-    case 'error':
-      return {
-        ...state,
-        error: true,
-        helper: action.value,
-      };
+  case 'change':
+    return {
+      ...state,
+      value: action.value,
+      error: false,
+      helper: '',
+    };
+  case 'error':
+    return {
+      ...state,
+      error: true,
+      helper: action.value,
+    };
 
-    default:
-      break;
+  default:
+    break;
   }
   return state;
+};
+
+const getAyuthProviderIcon = (provider: string) => {
+  switch (provider) {
+  case ProviderId.GOOGLE:
+    return <GoogleIcon fontSize="inherit" />;
+
+  case ProviderId.GITHUB:
+    return <GitHubIcon fontSize="inherit" />;
+  default:
+    <LoginIcon fontSize="inherit" />;
+    break;
+  }
 };
 
 export const LoginContainer = () => {
@@ -98,9 +114,11 @@ export const LoginContainer = () => {
         onSubmit={onSubmit}
       />
       <div className="login-oauth-container">
-        <Link className="login-oaut-container__item" onClick={onOAuthClick} data-providerid="google.com">
-          <GoogleIcon fontSize="inherit" />
-        </Link>
+        {Object.keys(ALLOWED_OAUTH_PROVIDERS).map((key) => (
+          <Link key={key} className="login-oaut-container__item" onClick={onOAuthClick} data-providerid={key}>
+            {getAyuthProviderIcon(key)}
+          </Link>
+        ))}
       </div>
     </div>
   );

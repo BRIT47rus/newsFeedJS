@@ -9,12 +9,14 @@ import {
   browserLocalPersistence,
   ProviderId,
   GoogleAuthProvider,
+  GithubAuthProvider,
 } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 // eslint-disable-next-line
 export const ALLOWED_OAUTH_PROVIDERS: Record<string, any> = {
   [ProviderId.GOOGLE]: new GoogleAuthProvider(),
+  [ProviderId.GITHUB]: new GithubAuthProvider(),
 };
 const authContext = createContext<TAuthContext>({
   isAuth: null,

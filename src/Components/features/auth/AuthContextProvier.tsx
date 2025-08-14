@@ -1,14 +1,27 @@
 import React, { createContext, FC, useContext, useEffect, useState } from 'react';
 import { AuthContextProviderProps, TAuthContext } from './types';
-import { signOut, getAuth, User, signInWithEmailAndPassword, browserLocalPersistence } from 'firebase/auth';
+import {
+  signInWithPopup,
+  signOut,
+  getAuth,
+  User,
+  signInWithEmailAndPassword,
+  browserLocalPersistence,
+  ProviderId,
+  GoogleAuthProvider,
+} from 'firebase/auth';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
-
+// eslint-disable-next-line
+export const ALLOWED_OAUTH_PROVIDERS: Record<string, any> = {
+  [ProviderId.GOOGLE]: new GoogleAuthProvider(),
+};
 const authContext = createContext<TAuthContext>({
   isAuth: null,
   user: null,
   logginWithEmailAndPassword: () => Promise.reject({}),
   logOut: () => undefined,
+  logInWithPopup: () => Promise.reject({}),
 });
 export const useAuth = (): TAuthContext => useContext<TAuthContext>(authContext);
 
@@ -29,6 +42,21 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, fi
         throw e;
       });
   };
+
+  const logInWithPopup = (provider: string) => {
+    setUser(null);
+    setIsAuth(null);
+    return signInWithPopup(auth, ALLOWED_OAUTH_PROVIDERS[provider])
+      .then((result) => {
+        //todo
+        return result;
+      })
+      .catch((e) => {
+        console.log('Loggin error');
+        throw e;
+      });
+  };
+
   const isUserAuth = async (firebase: FirebaseApp) => {
     const db = getFirestore(firebase);
     return await getDoc(doc(db, '/internal/auth'));
@@ -59,7 +87,9 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, fi
 
   const logOut = () => signOut(auth);
   return (
-    <authContext.Provider value={{ logOut, logginWithEmailAndPassword, isAuth, user }}>{children}</authContext.Provider>
+    <authContext.Provider value={{ logInWithPopup, logOut, logginWithEmailAndPassword, isAuth, user }}>
+      {children}
+    </authContext.Provider>
   );
 };
 // 6.1 21

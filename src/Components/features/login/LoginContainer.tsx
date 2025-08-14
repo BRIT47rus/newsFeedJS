@@ -3,8 +3,9 @@ import './LoginContainer.css';
 import { LoginForm, TLoginField } from '../../LoginForm/LoginForm';
 import { validateEmail } from './utils';
 import { useAuth } from '../auth/AuthContextProvier';
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import GoogleIcon from '@mui/icons-material/Google';
 type TLoginFieldState = Omit<TLoginField, 'onChange'>;
 type TAction = {
   type: 'change' | 'error';
@@ -12,22 +13,22 @@ type TAction = {
 };
 const reducer = (state: TLoginFieldState, action: TAction): TLoginFieldState => {
   switch (action.type) {
-  case 'change':
-    return {
-      ...state,
-      value: action.value,
-      error: false,
-      helper: '',
-    };
-  case 'error':
-    return {
-      ...state,
-      error: true,
-      helper: action.value,
-    };
+    case 'change':
+      return {
+        ...state,
+        value: action.value,
+        error: false,
+        helper: '',
+      };
+    case 'error':
+      return {
+        ...state,
+        error: true,
+        helper: action.value,
+      };
 
-  default:
-    break;
+    default:
+      break;
   }
   return state;
 };
@@ -35,7 +36,7 @@ const reducer = (state: TLoginFieldState, action: TAction): TLoginFieldState => 
 export const LoginContainer = () => {
   const history = useNavigate();
   const [authErr, setAuthError] = useState('');
-  const { logginWithEmailAndPassword } = useAuth();
+  const { logginWithEmailAndPassword, logInWithPopup } = useAuth();
 
   const [emailState, dispatchEmail] = useReducer(reducer, {
     name: 'email',
@@ -67,6 +68,19 @@ export const LoginContainer = () => {
         });
     }
   };
+  const onOAuthClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    const dataset = (e.target as HTMLElement)?.closest<HTMLLIElement>('.login-oaut-container__item')?.dataset;
+    if (dataset?.providerid) {
+      logInWithPopup(dataset?.providerid)
+        .then(() => {
+          history('/admin');
+        })
+        .catch((errr) => {
+          setAuthError(errr.message || 'error');
+        });
+    }
+  };
 
   return (
     <div className="login-container">
@@ -83,6 +97,11 @@ export const LoginContainer = () => {
         }}
         onSubmit={onSubmit}
       />
+      <div className="login-oauth-container">
+        <Link className="login-oaut-container__item" onClick={onOAuthClick} data-providerid="google.com">
+          <GoogleIcon fontSize="inherit" />
+        </Link>
+      </div>
     </div>
   );
 };

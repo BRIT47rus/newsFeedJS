@@ -7,6 +7,7 @@ export type TAuthContext = {
   user: User | null;
   logginWithEmailAndPassword: (email: string, password: string) => Promise<UserCredential>;
   logOut: () => void;
+  logInWithPopup: (provider: string) => Promise<UserCredential>;
 };
 export interface AuthContextProviderProps {
   children: ReactNode;

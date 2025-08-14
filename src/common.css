@@ -2,12 +2,18 @@
 
 :root {
   --color-primary: #272a2f;
-  --color-accent: #f35833;
+  /* --color-accent: #f35833; */
+  --color-accent: #0083fc;
   --color-white: #fff;
-  --color-gray: #868686;
-  --container-width: 1440px;
-  --grid-col-width: 98px;
+  /* --color-gray: #868686; */
+  --color-gray: #a3a3a3;
+  --container-width: 940px;
+  --grid-col-width: 60px;
+  --container-padding: 20px;
   --grid-gap: 20px;
+  --bg-zero: var(--color-white);
+  --bg-primary: var(--color-white);
+  --foreground-primary: var(var(--color-primary));
 }
 
 *:not(svg *) {
@@ -17,9 +23,18 @@
 
 body {
   font-family: Rubik, sans-serif;
-  background-color: #fff;
-  font-size: 22px;
+  background-color: var(--bg-zero);
+  color: var(--foreground-primary);
+  font-size: 14px;
+  line-height: 20px;
   font-weight: 400;
+  min-width: calc(var(--container-width)+2 * var(--container-padding));
+}
+
+.container {
+  max-width: var(--container-width);
+  padding: 0 var(--container-padding);
+  margin: 0 auto;
 }
 
 /* main */

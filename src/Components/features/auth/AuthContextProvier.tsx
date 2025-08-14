@@ -46,6 +46,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children, fi
             setUser(user);
           })
           .catch(() => {
+            logOut();
             setIsAuth(false);
             setUser(null);
           });

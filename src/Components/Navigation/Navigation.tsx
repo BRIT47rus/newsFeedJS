@@ -1,21 +1,17 @@
 import React, { FC } from 'react';
 import './Navigation.css';
-import logo from '../../image/logo.svg';
 import { categoryNames } from '../../utils';
 import { useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 
 interface NavigationProps {
   className?: string;
-  placement: 'header' | 'footer';
 }
-export const Navigation: FC<NavigationProps> = ({ className = '', placement = 'header' }) => {
+export const Navigation: FC<NavigationProps> = ({ className = '' }) => {
   const location = useLocation();
   return (
-    <nav className={`navigation grid  navigation--${placement} ${className} `}>
-      <NavLink to="/" className="navigation__logo">
-        <img className="navigation__image" src={logo} alt="" />
-      </NavLink>
+    <nav className={classNames('navigation', className)}>
       <ul className="navigation__list">
         {['index', 'fashion', 'tech', 'sport', 'politics'].map((item) => {
           return (

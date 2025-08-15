@@ -4,6 +4,7 @@ import { ArticleItemAPI, IArticle, ICategories, ISource, RelatedArticlesAPI } fr
 import { useParams } from 'react-router-dom';
 import { ArticleItemInfo } from '../ArticleItemInfo/ArticleItemInfo';
 import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
+import { Hero } from '../Hero/Hero';
 
 export const ArticleItem = () => {
   const { id } = useParams();
@@ -48,31 +49,12 @@ export const ArticleItem = () => {
   return (
     <section className="article-page">
       <article className="article">
-        {articleItem.image.length ? (
-          <section className="article__hero" style={{ backgroundImage: `url(${articleItem.image})` }}>
-            <div className="container article__hero-content">
-              <div className="grid">
-                <h1 className="article__hero-title">{articleItem.title}</h1>
-              </div>
-
-              {renderArticleInfo(articleItem)}
-            </div>
-          </section>
-        ) : null}
-
+        <Hero title={articleItem.title} image={articleItem.image} />
         <div className="grid container article__main">
           <div className="article__content">
-            {!articleItem.image.length && (
-              <div className="article__title-container">
-                <h1 className="article__title">{articleItem.title}</h1>
-
-                {renderArticleInfo(articleItem)}
-              </div>
-            )}
-
+            {renderArticleInfo(articleItem)}
             <p>{articleItem.text}</p>
           </div>
-
           <div className="article__sidebar">
             {relatedArticles.slice(3, 9).map((item) => {
               const source = sources.find(({ id }) => item.source_id === id);
@@ -90,7 +72,6 @@ export const ArticleItem = () => {
           </div>
         </div>
       </article>
-      {/* --------------------07:22 1/3-------------------------------side panel------------------------------------------------------- */}
       <section className="article-page__related-articles">
         <div className="container">
           <h2 className="article-page__related-articles-title">Читайте также:</h2>

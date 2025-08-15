@@ -2,13 +2,15 @@ import './Article.css';
 import React, { useEffect, useState } from 'react';
 import { ArticleItemAPI, IArticle, ISource, RelatedArticlesAPI } from '../../types';
 import { useParams } from 'react-router-dom';
-import { ArticleItemInfo } from '../ArticleItemInfo/ArticleItemInfo';
 import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
 import { Hero } from '../Hero/Hero';
 import { ArticleCard } from '../ArticleCard/ArticleCard';
+import { beautifyDate, categoryTitles } from '../../utils';
+import { Source } from '../Source/Source';
+import { Title } from '../../Title/Title';
 
 export const ArticleItem = () => {
-  const { id } = useParams();
+  const { id }: { id?: string } = useParams();
   const [articleItem, setArticleItem] = useState<ArticleItemAPI | null>(null);
   const [relatedArticles, setRelatedArticles] = useState<IArticle[] | null>(null);
   const [sources, setSources] = useState<ISource[]>([]);
@@ -31,47 +33,60 @@ export const ArticleItem = () => {
   if (articleItem === null || relatedArticles === null) {
     return null;
   }
-  const renderArticleInfo = (articleItem: ArticleItemAPI) => {
-    return (
-      <ArticleItemInfo
-        categoryName={articleItem.category.name}
-        date={articleItem.date}
-        source={articleItem.link}
-        sourceName={articleItem.source?.name}
-        author={articleItem.author}
-      />
-    );
-  };
+  // const renderArticleInfo = (articleItem: ArticleItemAPI) => {
+  //   return (
+  //     <ArticleItemInfo
+  //       categoryName={articleItem.category.name}
+  //       date={articleItem.date}
+  //       source={articleItem.link}
+  //       sourceName={articleItem.source?.name}
+  //       author={articleItem.author}
+  //     />
+  //   );
+  // };
 
   return (
     <section className="article-page">
-      <article className="article">
-        <Hero title={articleItem.title} image={articleItem.image} className="article-page__hero" />
-        <div className="grid container article__main">
-          <div className="article__content">
-            {renderArticleInfo(articleItem)}
+      <Hero title={articleItem.title} image={articleItem.image} className="article-page__hero" />
+      <div className="container article-page__main">
+        <div className="article-page__info">
+          <span className="article-page__category">{categoryTitles[articleItem.category.name]}</span>
+          <span className="article-page__date">{beautifyDate(articleItem.date)}</span>
+          {articleItem.link.length > 0 && (
+            <Source className="article-page__source" href={articleItem.link}>
+              {articleItem.source?.name}
+            </Source>
+          )}
+        </div>
+
+        <div className="grid">
+          <div className="article-page__content">
             <p>{articleItem.text}</p>
           </div>
-          <div className="article__sidebar">
+
+          <div className="article-page__sidebar">
             {relatedArticles.slice(3, 9).map((item) => {
               const source = sources.find(({ id }) => item.source_id === id);
               return (
                 <SidebarArticleCard
-                  className="article__sidebar-item"
+                  className="article-page__sidebar-item"
+                  date={item.date}
+                  key={item.id}
                   id={item.id}
                   title={item.title}
                   source={source?.name || ''}
-                  date={item.date}
                   image={item.image}
                 />
               );
             })}
           </div>
         </div>
-      </article>
+      </div>
       <section className="article-page__related-articles">
         <div className="container">
-          <h2 className="article-page__related-articles-title">Читайте также:</h2>
+          <Title Component="h2" className="article-page__related-articles-title">
+            Читайте также:
+          </Title>
 
           <div className="grid article-page__related-articles-list">
             {relatedArticles.slice(0, 3).map((item) => {
@@ -82,8 +97,8 @@ export const ArticleItem = () => {
                   key={item.id}
                   id={item.id}
                   title={item.title}
-                  source={source?.name}
                   date={item.date}
+                  source={source?.name}
                 />
               );
             })}

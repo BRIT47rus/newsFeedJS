@@ -1,8 +1,9 @@
 export interface NewsAPI {
-  sources: ISource[];
-  categories: ICategories[];
-  items: IArticle[];
+  sources: Source[];
+  categories: Category[];
+  items: Article[];
 }
+
 export interface ArticleItemAPI {
   id: number;
   lang: string;
@@ -12,23 +13,29 @@ export interface ArticleItemAPI {
   image: string;
   link: string;
   text: string;
-  category: ICategories;
-  source: ISource;
+  category: Category;
+  source: Source;
   author?: string;
 }
+
 export interface RelatedArticlesAPI {
-  items: IArticle[];
+  items: Article[];
 }
-export interface ISource {
+
+export interface Source {
   id: number;
   name: string;
   site?: string;
 }
-export interface ICategories {
+
+export type CategoryNames = 'politics' | 'sport' | 'tech' | 'karpov.courses' | 'fashion' | 'other';
+
+export interface Category {
   id: number;
   name: CategoryNames;
 }
-export interface IArticle {
+
+export interface Article {
   id: number;
   lang: string;
   date: string;
@@ -51,4 +58,3 @@ export interface IPartnerArticle {
     seconds: number;
   };
 }
-export type CategoryNames = 'politics' | 'sport' | 'tech' | 'karpov.courses' | 'fashion' | 'other' | 'index';

@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import classNames from 'classnames';
 import './Source.css';
 
 interface SourceProps {
   className?: string;
   href?: string;
+  children: ReactNode;
 }
 
 export const Source: FC<SourceProps> = ({ children = 'Источник', className, href }) => {

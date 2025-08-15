@@ -1,8 +1,12 @@
-export const categoryIDs = {
+import { CategoryNames } from './types';
+
+export const categoryIDs: Record<CategoryNames, number> = {
   index: 0,
-  fashion: 3,
-  tech: 1,
   sport: 2,
+  tech: 1,
+  ['karpov.courses']: 6,
+  fashion: 3,
+  other: 5,
   politics: 4,
 };
 
@@ -18,3 +22,13 @@ export const beautifyDate = (date: string): string =>
     month: 'long',
     day: 'numeric',
   });
+
+export const categoryTitles: Record<CategoryNames, string> = {
+  fashion: 'Мода',
+  tech: 'Технологии',
+  sport: 'Спорт',
+  ['karpov.courses']: 'Karpov',
+  other: 'Прочее',
+  politics: 'Политика',
+  index: 'index',
+};

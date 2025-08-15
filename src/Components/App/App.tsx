@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { Articles } from '../Articles/Articles';
 import { ArticlePage } from '../ArticlePage/ArticlePage';
 
 import { Page } from '../Page/Page';
@@ -10,6 +9,7 @@ import { AdminArticlesItem } from '../AdminArticleItem/AdminArticleItem';
 import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
 import { LoginContainer } from '../features/login/LoginContainer';
 import { CategoryPage } from '../CategoryPage/CategoryPage';
+import { HomePage } from '../HomePage/HomePage';
 export const App = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -78,7 +78,7 @@ export const App = () => {
           path="/"
           element={
             <Page>
-              <Articles />
+              <HomePage />
             </Page>
           }
         />

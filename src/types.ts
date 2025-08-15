@@ -1,6 +1,6 @@
 export interface NewsAPI {
   sources: ISource[];
-  categories: ICategories[];
+  categories: ICategory[];
   items: IArticle[];
 }
 export interface ArticleItemAPI {
@@ -12,7 +12,7 @@ export interface ArticleItemAPI {
   image: string;
   link: string;
   text: string;
-  category: ICategories;
+  category: ICategory;
   source: ISource;
   author?: string;
 }
@@ -24,7 +24,7 @@ export interface ISource {
   name: string;
   site?: string;
 }
-export interface ICategories {
+export interface ICategory {
   id: number;
   name: CategoryNames;
 }

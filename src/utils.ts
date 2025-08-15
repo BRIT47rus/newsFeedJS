@@ -1,6 +1,6 @@
 import { CategoryNames } from './types';
 
-export const categoryIDs: Record<CategoryNames, number> = {
+export const categoryIds: Record<CategoryNames, number> = {
   sport: 2,
   tech: 1,
   ['karpov.courses']: 6,

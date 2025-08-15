@@ -25,6 +25,7 @@ export const Hero: React.FC<HeroProps> = ({ image = '', title, text = '', classN
     >
       <div className="hero__in" style={{ backgroundImage: `url(${image})` }}>
         <div className="hero__container container">
+          <img src={image} alt="" />
           <div className="hero__content">
             <Title className="hero__title">{title}</Title>
             {text.length > 0 && <p className="hero__text">{text}</p>}

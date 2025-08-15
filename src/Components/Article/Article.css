@@ -70,8 +70,11 @@
   grid-area: c;
 }
 
-.article__small-column {
+.article__sidebar {
   grid-area: r;
+}
+.article__sidebar-item:not(:last-child) {
+  margin-bottom: 32px;
 }
 
 .article__content > :first-child {

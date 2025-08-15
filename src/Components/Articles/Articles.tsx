@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './articles.css';
 import { MainArticle } from '../MainArticle/MainArticle';
-import { SmallArticle } from '../SmallaArticles/SmallArticle';
 import { NewsAPI } from '../../types';
 import { categoryIDs } from '../../utils';
+import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
 
 export const Articles = () => {
   const { categoryId = 'index' }: { categoryId?: string } = useParams();
@@ -24,7 +24,7 @@ export const Articles = () => {
   return (
     <section className="articles">
       <div className="container grid">
-        <section className="articles__big-column">
+        <section className="articles__content">
           {articles &&
             articles.items.slice(0, 3).map((item) => {
               const category = articles.categories.find(({ id }) => item['category_id'] === id);
@@ -43,18 +43,20 @@ export const Articles = () => {
               );
             })}
         </section>
-        <section className="articles__small-column">
+        <section className="articles__sidebar">
           {articles &&
             articles.items.slice(3, 12).map((item) => {
               const source = articles.sources.find(({ id }) => item.source_id === id);
 
               return (
-                <SmallArticle
+                <SidebarArticleCard
+                  className="articles__sidebar-item"
                   date={item.date}
                   source={source?.name || ''}
                   key={item.id}
                   title={item.title}
                   id={item.id}
+                  image={item.image}
                 />
               );
             })}

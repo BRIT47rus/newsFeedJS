@@ -2,10 +2,13 @@
   margin-bottom: 135px;
 }
 
-.articles__big-column {
-  grid-column: span 9;
+.articles__content {
+  grid-column: span 7;
 }
 
 .articles__partner-article {
   margin: 50px 0;
+}
+.article__sidebar {
+  grid-column: 9/-1;
 }

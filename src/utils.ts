@@ -5,6 +5,7 @@ export const categoryIDs = {
   sport: 2,
   politics: 4,
 };
+
 export const categoryNames = {
   index: 'Главная',
   fashion: 'Мода',

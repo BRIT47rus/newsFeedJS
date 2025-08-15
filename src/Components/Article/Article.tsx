@@ -1,16 +1,16 @@
 import './Article.css';
 import React, { useEffect, useState } from 'react';
-import { ArticleItemAPI, IArticle, ICategories, ISource, RelatedArticlesAPI } from '../../types';
+import { ArticleItemAPI, IArticle, ISource, RelatedArticlesAPI } from '../../types';
 import { useParams } from 'react-router-dom';
 import { ArticleItemInfo } from '../ArticleItemInfo/ArticleItemInfo';
 import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
 import { Hero } from '../Hero/Hero';
+import { ArticleCard } from '../ArticleCard/ArticleCard';
 
 export const ArticleItem = () => {
   const { id } = useParams();
   const [articleItem, setArticleItem] = useState<ArticleItemAPI | null>(null);
   const [relatedArticles, setRelatedArticles] = useState<IArticle[] | null>(null);
-  const [, setCategories] = useState<ICategories[]>([]);
   const [sources, setSources] = useState<ISource[]>([]);
   useEffect(() => {
     fetch(`https://frontend.karpovcourses.net/api/v2/news/full/${id}`)
@@ -18,14 +18,11 @@ export const ArticleItem = () => {
       .then(setArticleItem);
     Promise.all([
       fetch(`https://frontend.karpovcourses.net/api/v2/news/related/${id}?count=9`).then((response) => response.json()),
-      fetch(`https://frontend.karpovcourses.net/api/v2/categories`).then((response) => response.json()),
       fetch(`https://frontend.karpovcourses.net/api/v2/sources`).then((response) => response.json()),
     ]).then((response) => {
       const articles: RelatedArticlesAPI = response[0];
-      const categories: ICategories[] = response[1];
-      const sources: ISource[] = response[2];
+      const sources: ISource[] = response[1];
 
-      setCategories(categories);
       setRelatedArticles(articles.items);
       setSources(sources);
     });
@@ -49,7 +46,7 @@ export const ArticleItem = () => {
   return (
     <section className="article-page">
       <article className="article">
-        <Hero title={articleItem.title} image={articleItem.image} />
+        <Hero title={articleItem.title} image={articleItem.image} className="article-page__hero" />
         <div className="grid container article__main">
           <div className="article__content">
             {renderArticleInfo(articleItem)}
@@ -78,20 +75,16 @@ export const ArticleItem = () => {
 
           <div className="grid article-page__related-articles-list">
             {relatedArticles.slice(0, 3).map((item) => {
-              // const category = categories.find(({ id }) => item.category_id === id);
-              // const source = sources.find(({ id }) => item.source_id === id);
-              console.log(item);
+              const source = sources.find(({ id }) => item.source_id === id);
               return (
-                // <SingleLineTitleArticle
-                //   key={item.id}
-                //   id={item.id}
-                //   image={item.image}
-                //   title={item.title}
-                //   text={item.description}
-                //   category={category?.name || ''}
-                //   source={source?.name || ''}
-                // />
-                <></>
+                <ArticleCard
+                  className="article-page__related-articles-item"
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  source={source?.name}
+                  date={item.date}
+                />
               );
             })}
           </div>

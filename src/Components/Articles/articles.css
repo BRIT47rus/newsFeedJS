@@ -12,3 +12,6 @@
 .article__sidebar {
   grid-column: 9/-1;
 }
+.articles__hero {
+  margin-bottom: 32px;
+}

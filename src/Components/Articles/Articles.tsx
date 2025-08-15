@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './articles.css';
-import { MainArticle } from '../MainArticle/MainArticle';
 import { NewsAPI } from '../../types';
-import { categoryIDs } from '../../utils';
+import { categoryIDs, categoryNames } from '../../utils';
 import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
+import { Hero } from '../Hero/Hero';
+import { ArticleCard } from '../ArticleCard/ArticleCard';
 
 export const Articles = () => {
   const { categoryId = 'index' }: { categoryId?: string } = useParams();
@@ -23,6 +24,7 @@ export const Articles = () => {
   }, [categoryId]);
   return (
     <section className="articles">
+      <Hero title={categoryNames[categoryId]} image="test" className="articles__hero" />
       <div className="container grid">
         <section className="articles__content">
           {articles &&
@@ -31,11 +33,11 @@ export const Articles = () => {
               const source = articles.sources.find(({ id }) => item.source_id === id);
 
               return (
-                <MainArticle
+                <ArticleCard
                   id={item.id}
                   category={category ? category.name : ''}
                   image={item.image}
-                  source={source?.name || ''}
+                  source={source?.name}
                   description={item.description}
                   title={item.title}
                   key={item.id}

@@ -38,7 +38,7 @@ export const ArticleCard: FC<Props> = ({
         {
           'article-card--has-description': hasDescription,
         },
-        className,
+        className
       )}
     >
       {hasImage && <img className="article-card__image" src={image} alt="" />}

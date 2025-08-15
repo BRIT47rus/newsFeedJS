@@ -1,4 +1,4 @@
-import './Article.css';
+import './ArticlePage.css';
 import React, { useEffect, useState } from 'react';
 import { ArticleItemAPI, IArticle, ISource, RelatedArticlesAPI } from '../../types';
 import { useParams } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { beautifyDate, categoryTitles } from '../../utils';
 import { Source } from '../Source/Source';
 import { Title } from '../../Title/Title';
 
-export const ArticleItem = () => {
+export const ArticlePage = () => {
   const { id }: { id?: string } = useParams();
   const [articleItem, setArticleItem] = useState<ArticleItemAPI | null>(null);
   const [relatedArticles, setRelatedArticles] = useState<IArticle[] | null>(null);
@@ -33,17 +33,6 @@ export const ArticleItem = () => {
   if (articleItem === null || relatedArticles === null) {
     return null;
   }
-  // const renderArticleInfo = (articleItem: ArticleItemAPI) => {
-  //   return (
-  //     <ArticleItemInfo
-  //       categoryName={articleItem.category.name}
-  //       date={articleItem.date}
-  //       source={articleItem.link}
-  //       sourceName={articleItem.source?.name}
-  //       author={articleItem.author}
-  //     />
-  //   );
-  // };
 
   return (
     <section className="article-page">

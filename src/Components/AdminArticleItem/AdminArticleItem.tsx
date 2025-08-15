@@ -45,9 +45,9 @@ export const AdminArticlesItem = () => {
   });
   const [inputValues, setInputValues] = useState<InputValueType>({
     'company-name': '',
+    title: '',
     description: '',
     text: '',
-    title: '',
     image: '',
   });
   const onChangeInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

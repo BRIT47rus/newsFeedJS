@@ -1,7 +1,7 @@
 import React from 'react';
 import './Hero.css';
 import classNames from 'classnames';
-// import { Title } from '../Title/Title';
+import { Title } from '../../Title/Title';
 
 interface HeroProps {
   image?: string;
@@ -20,13 +20,13 @@ export const Hero: React.FC<HeroProps> = ({ image = '', title, text = '', classN
         {
           'hero--no-image': !hasImage,
         },
-        className,
+        className
       )}
     >
       <div className="hero__in" style={{ backgroundImage: `url(${image})` }}>
         <div className="hero__container container">
           <div className="hero__content">
-            {/* <Title className="hero__title">{title}</Title> */}
+            <Title className="hero__title">{title}</Title>
             {text.length > 0 && <p className="hero__text">{text}</p>}
           </div>
         </div>

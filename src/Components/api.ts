@@ -38,7 +38,7 @@ export const getPartnersArticles = async (): Promise<IPartnerArticle[]> => {
 
   return articles;
 };
-export const createPartnerArticle = async (data: Omit<IPartnerArticle, 'id'>) => {
+export const createPartnerArticle = async (data: Omit<IPartnerArticle, 'id' | 'created'>) => {
   const db = getFirestore();
   try {
     await addDoc(collection(db, partnersPostsCollection), data);
@@ -63,8 +63,8 @@ export const getParnerArticle = async (id: string): Promise<IPartnerArticle> => 
     return Promise.reject(error);
   }
 };
-
-export const updatePartnerArticle = async (id: string, data: Omit<IPartnerArticle, 'id'>) => {
+//eslint-ignore
+export const updatePartnerArticle = async (id: string, data: Omit<IPartnerArticle, 'id' | 'created'>) => {
   const db = getFirestore();
   const dataRef = doc(db, partnersPostsCollection, id);
   try {

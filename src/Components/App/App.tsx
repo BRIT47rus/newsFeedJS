@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Articles } from '../Articles/Articles';
-import { ArticleItem } from '../ArticlePage/ArticlePage';
+import { ArticlePage } from '../ArticlePage/ArticlePage';
 
 import { Page } from '../Page/Page';
 import { AdminPage } from '../AdminePage/AdminePage';
@@ -61,7 +61,7 @@ export const App = () => {
           path="/article/:id"
           element={
             <Page>
-              <ArticleItem />
+              <ArticlePage />
             </Page>
           }
         />

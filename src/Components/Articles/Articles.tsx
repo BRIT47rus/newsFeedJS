@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './articles.css';
 import { NewsAPI } from '../../types';
-import { categoryIDs, categoryNames } from '../../utils';
+import { categoryIDs, categoryTitles } from '../../utils';
 import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
 import { Hero } from '../Hero/Hero';
 import { ArticleCard } from '../ArticleCard/ArticleCard';
 
 export const Articles = () => {
-  const { categoryId = 'index' }: { categoryId?: string } = useParams();
+  const { categoryId = 'index' } = useParams();
   const [articles, setArticles] = React.useState<NewsAPI>({
     items: [],
     categories: [],
@@ -24,7 +24,7 @@ export const Articles = () => {
   }, [categoryId]);
   return (
     <section className="articles">
-      <Hero title={categoryNames[categoryId]} image="test" className="articles__hero" />
+      <Hero title={categoryTitles[categoryId]} image="test" className="articles__hero" />
       <div className="container grid">
         <section className="articles__content">
           {articles &&
@@ -35,7 +35,7 @@ export const Articles = () => {
               return (
                 <ArticleCard
                   id={item.id}
-                  category={category ? category.name : ''}
+                  category={category?.name}
                   image={item.image}
                   source={source?.name}
                   description={item.description}

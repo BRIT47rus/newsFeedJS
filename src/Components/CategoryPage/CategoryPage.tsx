@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
 import './CategoryPage.css';
+
 import { CategoryNames, NewsAPI } from '../../types';
 import { useParams } from 'react-router-dom';
-import { categoryIds, categoryTitles } from '../../utils';
-import { SidebarArticleCard } from '../SidebarArticleCard/SidebarArticleCard';
 import { Hero } from '../Hero/Hero';
 import { ArticleCard } from '../ArticleCard/ArticleCard';
+import { categoryIDs, categoryTitles } from '../../utils';
+import { SidebarArticleCard } from '../SideBarArticleCart/SideBarArticleCart';
 
 export const CategoryPage: FC = () => {
-  const { category }: { category: CategoryNames } = useParams();
+  const { category = 'index' }: { category?: CategoryNames } = useParams();
   const [articles, setArticles] = React.useState<NewsAPI>({
     items: [],
     categories: [],
@@ -16,7 +17,7 @@ export const CategoryPage: FC = () => {
   });
 
   React.useEffect(() => {
-    fetch('https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIds[category] || '')
+    fetch('https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIDs[category])
       .then((response) => response.json())
       .then((response: NewsAPI) => {
         setArticles(response);

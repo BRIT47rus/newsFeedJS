@@ -1,7 +1,6 @@
 import { CategoryNames } from './types';
 
 export const categoryIDs: Record<CategoryNames, number> = {
-  index: 0,
   sport: 2,
   tech: 1,
   ['karpov.courses']: 6,
@@ -10,13 +9,6 @@ export const categoryIDs: Record<CategoryNames, number> = {
   politics: 4,
 };
 
-export const categoryNames = {
-  index: 'Главная',
-  fashion: 'Мода',
-  tech: 'Технологии',
-  sport: 'Спорт',
-  politics: 'Политика',
-};
 export const beautifyDate = (date: string): string =>
   new Date(date).toLocaleString('ru-RU', {
     month: 'long',
@@ -30,5 +22,4 @@ export const categoryTitles: Record<CategoryNames, string> = {
   ['karpov.courses']: 'Karpov',
   other: 'Прочее',
   politics: 'Политика',
-  index: 'index',
 };

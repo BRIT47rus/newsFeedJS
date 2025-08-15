@@ -9,6 +9,7 @@ import { AdminArticles } from '../AdminArticles/AdminArticles';
 import { AdminArticlesItem } from '../AdminArticleItem/AdminArticleItem';
 import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
 import { LoginContainer } from '../features/login/LoginContainer';
+import { CategoryPage } from '../CategoryPage/CategoryPage';
 export const App = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -66,10 +67,10 @@ export const App = () => {
           }
         />
         <Route
-          path="/:categoryId"
+          path="/:category"
           element={
             <Page>
-              <Articles />
+              <CategoryPage />
             </Page>
           }
         />

@@ -51,4 +51,4 @@ export interface IPartnerArticle {
     seconds: number;
   };
 }
-export type CategoryNames = 'politics' | 'sport' | 'tech' | 'karpov.courses' | 'fashion' | 'other' | 'index';
+export type CategoryNames = 'politics' | 'sport' | 'tech' | 'karpov.courses' | 'fashion' | 'other';

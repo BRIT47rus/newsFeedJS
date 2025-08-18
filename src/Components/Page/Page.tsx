@@ -1,14 +1,17 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import { Navigation } from '../Navigation/Navigation';
 import './Page.css';
 import { Logo } from '../Logo/Logo';
 import { ColorSchemeSwitcher } from '../ColorSchemeSwitcher/ColorSchemeSwitcher';
+import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 interface Props {
   children: ReactNode;
 }
 export const Page: FC<Props> = ({ children }) => {
+  const [showModal, setShowModal] = useState(true);
   return (
     <>
+      {showModal && <ModalWrapper onClose={() => setShowModal(false)}>Hefgfdgfdgfdgfdgdfkki</ModalWrapper>}
       <header className="header">
         <div className="container header__container">
           <Logo />

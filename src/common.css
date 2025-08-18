@@ -5,7 +5,8 @@
   --constant-accent: #0083fc;
   --constant-grey2: #a3a3a3;
   --constant-white: #fff;
-  --constant-overlay-alpha64: rgba(0, 0, 0, 0.64) --container-width: 940px;
+  --constant-overlay-alpha64: rgba(0, 0, 0, 0.64);
+  --container-width: 940px;
   --container-padding: 20px;
   --grid-column-width: 60px;
   --grid-gap: 20px;
@@ -27,7 +28,9 @@
   all: unset;
   display: revert;
 }
-
+.--prevent-scroll {
+  overflow: hidden;
+}
 body {
   font-family: 'Rubik', sans-serif;
   background-color: var(--background-zero);

@@ -5,19 +5,22 @@
   --constant-accent: #0083fc;
   --constant-grey2: #a3a3a3;
   --constant-white: #fff;
-  --container-width: 940px;
+  --constant-overlay-alpha64: rgba(0, 0, 0, 0.64) --container-width: 940px;
   --container-padding: 20px;
   --grid-column-width: 60px;
   --grid-gap: 20px;
   --background-zero: var(--color-white);
   --background-primary: var(--color-white);
   --foreground-primary: var(--constant-black);
+
+  color-scheme: light;
 }
 
 [scheme='dark'] {
   --background-zero: #131517;
   --background-primary: var(--constant-balck);
   --foreground-primary: var(--constant-white);
+  color-scheme: dark;
 }
 
 *:not(svg *) {

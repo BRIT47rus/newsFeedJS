@@ -2,7 +2,7 @@ const LS_COLOR_SCHEME_KEY = 'newsfeed:scheme';
 
 export function applyScheme(scheme: 'dark' | 'light', persist = false): void {
   document.documentElement.setAttribute('scheme', scheme);
-  persist && localStorage.setItem(LS_COLOR_SCHEME_KEY, scheme);
+  if (persist) localStorage.setItem(LS_COLOR_SCHEME_KEY, scheme);
 }
 
 export function getSystemScheme(): 'dark' | 'light' {

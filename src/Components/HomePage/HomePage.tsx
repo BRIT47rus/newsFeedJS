@@ -21,9 +21,9 @@ export const HomePage: FC = () => {
   React.useEffect(() => {
     Promise.all<NewsAPI>([
       fetch('https://frontend.karpovcourses.net/api/v2/ru/news').then((res) => res.json()),
-      fetch(`https://frontend.karpovcourses.net/api/v2/ru/news/${categoryIds['karpov.courses']}`).then((res) =>
-        res.json()
-      ),
+      fetch(`https://frontend.karpovcourses.net/api/v2/ru/news/${categoryIds.fashion}`).then((res) => {
+        return res.json();
+      }),
       fetch('https://frontend.karpovcourses.net/api/v2/ru/trends').then((res) => res.json()),
     ]).then(([articles, karpovArticles, trendArticles]) => {
       setArticles(articles.items);

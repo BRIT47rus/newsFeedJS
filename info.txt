@@ -1,0 +1,2 @@
+Ссылка на данные с бекенда (версия 1) - https://frontend.karpovcourses.net/api/v1/ru/news/
+Ссылка на данные с бекенда (версия 2) - https://frontend.karpovcourses.net/api/v2/ru/news/

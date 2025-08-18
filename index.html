@@ -1,5 +1,71 @@
 <!DOCTYPE html>
-<html lang="en"><head><script defer src="/bundle.f34fb4585245b0501b98.js"></script><link href="/bundle.e7e51be24f360364fb12.css" rel="stylesheet"></head>
+<html lang="en"><head><script defer src="/main.bb1dea4fd08d40c1a281.js"></script><script defer>/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/colorSchemeUtils.ts":
+/*!*********************************!*\
+  !*** ./src/colorSchemeUtils.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("{\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.applyScheme = applyScheme;\nexports.getSystemScheme = getSystemScheme;\nexports.getSavedScheme = getSavedScheme;\nexports.removeSavedScheme = removeSavedScheme;\nvar LS_COLOR_SCHEME_KEY = 'newsfeed:scheme';\nfunction applyScheme(scheme, persist) {\n    if (persist === void 0) { persist = false; }\n    document.documentElement.setAttribute('scheme', scheme);\n    if (persist)\n        localStorage.setItem(LS_COLOR_SCHEME_KEY, scheme);\n}\nfunction getSystemScheme() {\n    return window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';\n}\nfunction getSavedScheme() {\n    return localStorage.getItem(LS_COLOR_SCHEME_KEY);\n}\nfunction removeSavedScheme() {\n    localStorage.removeItem(LS_COLOR_SCHEME_KEY);\n}\n\n\n//# sourceURL=webpack://news/./src/colorSchemeUtils.ts?\n}");
+
+/***/ }),
+
+/***/ "./src/initColorScheme.ts":
+/*!********************************!*\
+  !*** ./src/initColorScheme.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("{\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nvar colorSchemeUtils_1 = __webpack_require__(/*! ./colorSchemeUtils */ \"./src/colorSchemeUtils.ts\");\n(0, colorSchemeUtils_1.applyScheme)((0, colorSchemeUtils_1.getSavedScheme)() || (0, colorSchemeUtils_1.getSystemScheme)());\n\n\n//# sourceURL=webpack://news/./src/initColorScheme.ts?\n}");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/initColorScheme.ts");
+/******/ 	
+/******/ })()
+;</script><link href="/bundle.945c54528931250e93e1.css" rel="stylesheet"></head>
     <head>
  <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

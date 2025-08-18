@@ -33,7 +33,7 @@
 
 .hero__content {
   padding: 28px;
-  background-color: var(--color-primary);
+  background-color: var(--constant-black);
   color: var(--color-white);
   max-width: calc(var(--grid-column-width) * 10 + var(--grid-gap) * 9);
 }

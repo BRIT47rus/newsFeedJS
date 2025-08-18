@@ -13,7 +13,7 @@ type SourcesRecord = Record<ISource['id'], ISource>;
 
 export const HomePage: FC = () => {
   const [articles, setArticles] = React.useState<NewsAPI['items']>([]);
-  const [karpovArticles, setKarpovArticles] = React.useState<NewsAPI['items']>([]);
+  const [fashionArticles, setFashionArticles] = React.useState<NewsAPI['items']>([]);
   const [trendArticles, setTrendArticles] = React.useState<NewsAPI['items']>([]);
   const [categories, setCategories] = React.useState<CategoriesRecord>({});
   const [sources, setSources] = React.useState<SourcesRecord>([]);
@@ -25,13 +25,13 @@ export const HomePage: FC = () => {
         return res.json();
       }),
       fetch('https://frontend.karpovcourses.net/api/v2/ru/trends').then((res) => res.json()),
-    ]).then(([articles, karpovArticles, trendArticles]) => {
+    ]).then(([articles, fashionArticles, trendArticles]) => {
       setArticles(articles.items);
-      setKarpovArticles(karpovArticles.items);
+      setFashionArticles(fashionArticles.items);
       setTrendArticles(trendArticles.items);
 
       setCategories(
-        [articles.categories, karpovArticles.categories, trendArticles.categories].flat().reduce(function (
+        [articles.categories, fashionArticles.categories, trendArticles.categories].flat().reduce(function (
           acc: CategoriesRecord,
           categoryItem
         ) {
@@ -41,7 +41,7 @@ export const HomePage: FC = () => {
       );
 
       setSources(
-        [articles.sources, karpovArticles.sources, trendArticles.sources].flat().reduce(function (
+        [articles.sources, fashionArticles.sources, trendArticles.sources].flat().reduce(function (
           acc: SourcesRecord,
           sourceItem
         ) {
@@ -88,11 +88,11 @@ export const HomePage: FC = () => {
       </section>
       <section className="container home-page__section">
         <Title Component="h2" className="home-page__title">
-          Karpov
+          Главная
         </Title>
         <div className="grid">
           <section className="home-page__content">
-            {karpovArticles.slice(2, 6).map((item) => {
+            {fashionArticles.slice(2, 6).map((item) => {
               return (
                 <ArticleCard
                   className="home-page__article-card"
@@ -108,7 +108,7 @@ export const HomePage: FC = () => {
             })}
           </section>
           <section className="home-page__sidebar">
-            {karpovArticles.slice(0, 2).map((item) => {
+            {fashionArticles.slice(0, 2).map((item) => {
               return (
                 <SidebarArticleCard
                   className="home-page__sidebar-item"

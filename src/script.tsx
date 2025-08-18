@@ -5,8 +5,7 @@ import { App } from './Components/App/App';
 import { initializeApi } from './Components/api';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './Components/features/auth/AuthContextProvier';
-import { applyScheme, getSavedScheme, getSystemScheme } from './colorSchemeUtils';
-applyScheme(getSavedScheme() || getSystemScheme());
+
 const firebaseApp = initializeApi();
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
@@ -14,5 +13,5 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </AuthContextProvider>,
+  </AuthContextProvider>
 );

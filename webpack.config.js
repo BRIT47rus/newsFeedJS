@@ -2,12 +2,16 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const EslintWebpackPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HTMLInlineScriptWebpackPlugin = require('html-inline-script-webpack-plugin');
 module.exports = {
   mode: 'development',
-  entry: './src/script.tsx',
+  entry: {
+    main: './src/script.tsx',
+    initColorScheme: './src/initColorScheme.ts',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[contenthash].js',
+    filename: '[name].[contenthash].js',
     publicPath: '/',
   },
   module: {
@@ -43,11 +47,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-    new EslintWebpackPlugin({
-      extensions: ['js', 'ts', 'tsx'],
+    new HTMLInlineScriptWebpackPlugin({
+      scriptMatchPattern: [/initColorScheme\..+\.js$/],
     }),
     new MiniCssExtractPlugin({
       filename: 'bundle.[contenthash].css',
+    }),
+    new EslintWebpackPlugin({
+      extensions: ['js', 'ts', 'tsx'],
     }),
   ],
   devServer: {

@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import { Navigation } from '../Navigation/Navigation';
 import './Page.css';
 import { Logo } from '../Logo/Logo';
+import { ColorSchemeSwitcher } from '../ColorSchemeSwitcher/ColorSchemeSwitcher';
 interface Props {
   children: ReactNode;
 }
@@ -12,6 +13,9 @@ export const Page: FC<Props> = ({ children }) => {
         <div className="container header__container">
           <Logo />
           <Navigation className="header__navigation" />
+          <div className="header__controls">
+            <ColorSchemeSwitcher />
+          </div>
         </div>
       </header>
 

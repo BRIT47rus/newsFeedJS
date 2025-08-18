@@ -13,12 +13,22 @@
   --background-primary: var(--color-white);
   --foreground-primary: var(--constant-black);
 }
-@media (prefers-color-schema: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --background-zero: #131517;
+    --background-primary: var(--constant-balck);
+    --foreground-primary: var(--constant-white);
+  }
+}
+[scheme='light'] {
+  --background-zero: var(--color-white);
+  --background-primary: var(--color-white);
+  --foreground-primary: var(--constant-black);
+}
+[scheme='dark'] {
+  --background-zero: #131517;
   --background-primary: var(--constant-balck);
   --foreground-primary: var(--constant-white);
-  }
 }
 
 *:not(svg *) {

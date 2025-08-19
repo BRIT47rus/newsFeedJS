@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import './ColorSchemeSwitcher.css';
 import { getSavedScheme, removeSavedScheme, applyScheme, getSystemScheme } from '../../colorSchemeUtils';
 import { Auto } from '../Icons/Auto';
@@ -11,6 +11,7 @@ type ColorSchemeSwitcherValues = 'auto' | 'dark' | 'light';
 const matchMedia = window.matchMedia('(prefers-color-scheme:dark)');
 
 export const ColorSchemeSwitcher: FC = () => {
+  const [dropdownShown, setDropdownSown] = useState(false);
   const targetRef = useRef<HTMLButtonElement>(null);
   const [userScheme, setUserScheme] = React.useState<ColorSchemeSwitcherValues>(getSavedScheme() || 'auto');
 
@@ -38,11 +39,38 @@ export const ColorSchemeSwitcher: FC = () => {
 
   return (
     <div className="color-scheme-switcher">
-      <button className="color-scheme-switcher__value">
+      <button
+        className="color-scheme-switcher__value"
+        onClick={() => {
+          setDropdownSown(!dropdownShown);
+        }}
+      >
         {userScheme === 'auto' && <Auto />}
         {userScheme === 'dark' && <Moon />}
         {userScheme === 'light' && <Sun />}
-        <DropDown targetRef={targetRef}>hello</DropDown>
+        <DropDown shown={dropdownShown} targetRef={targetRef} onShownChange={setDropdownSown}>
+          <button className="color-scheme-switcher__option" onClick={() => setUserScheme('auto')}>
+            <Auto />
+            <span className="color-scheme-switcher__text">Авто</span>
+            {userScheme === 'auto' && (
+              <img className="color-scheme-switcher__check" src="../../image/Checkj.svg" alt="check" />
+            )}
+          </button>
+          <button className="color-scheme-switcher__option" onClick={() => setUserScheme('dark')}>
+            <Moon />
+            <span className="color-scheme-switcher__text">Тёмная</span>
+            {userScheme === 'dark' && (
+              <img className="color-scheme-switcher__check" src="../../image/Checkj.svg" alt="check" />
+            )}
+          </button>
+          <button className="color-scheme-switcher__option" onClick={() => setUserScheme('light')}>
+            <Sun />
+            <span className="color-scheme-switcher__text">Светлая</span>
+            {userScheme === 'light' && (
+              <img className="color-scheme-switcher__check" src="../../image/Checkj.svg" alt="check" />
+            )}
+          </button>
+        </DropDown>
       </button>
     </div>
   );

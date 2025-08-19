@@ -1,3 +1,15 @@
 .color-scheme-switcher {
   all: revert;
 }
+.color-scheme-switcher__value {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1 px solid var(--color-scheme-switcher-border);
+  border-radius: 50%;
+  background: var(--background-zero);
+  cursor: pointer;
+  color: var(--constant-accent);
+}

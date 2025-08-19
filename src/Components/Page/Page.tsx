@@ -3,15 +3,23 @@ import { Navigation } from '../Navigation/Navigation';
 import './Page.css';
 import { Logo } from '../Logo/Logo';
 import { ColorSchemeSwitcher } from '../ColorSchemeSwitcher/ColorSchemeSwitcher';
-import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
+import { EmailModal } from '../EmailModal/EmailModal';
 interface Props {
   children: ReactNode;
 }
+const LS_EMAIL_SHOWN_KEY = 'neewsfeed:email_modal_shown';
 export const Page: FC<Props> = ({ children }) => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(!localStorage.getItem(LS_EMAIL_SHOWN_KEY));
   return (
     <>
-      {showModal && <ModalWrapper onClose={() => setShowModal(false)}></ModalWrapper>}
+      {showModal && (
+        <EmailModal
+          onClose={() => {
+            localStorage.setItem(LS_EMAIL_SHOWN_KEY, 'true');
+            setShowModal(false);
+          }}
+        />
+      )}
       <header className="header">
         <div className="container header__container">
           <Logo />

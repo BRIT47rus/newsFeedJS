@@ -26,6 +26,9 @@
   justify-content: center;
   background: inherit;
   border-radius: inherit;
+}
+.button__sniper {
+  font-size: 26px;
   animation: buttonSpinner 0.5s linear infinite;
 }
 

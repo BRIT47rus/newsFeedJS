@@ -11,7 +11,7 @@ export const Page: FC<Props> = ({ children }) => {
   const [showModal, setShowModal] = useState(true);
   return (
     <>
-      {showModal && <ModalWrapper onClose={() => setShowModal(false)}>Hefgfdgfdgfdgfdgdfkki</ModalWrapper>}
+      {showModal && <ModalWrapper onClose={() => setShowModal(false)}></ModalWrapper>}
       <header className="header">
         <div className="container header__container">
           <Logo />

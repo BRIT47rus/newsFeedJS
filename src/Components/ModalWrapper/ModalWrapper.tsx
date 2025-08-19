@@ -41,7 +41,7 @@ export const ModalWrapper: FC<ModalProps> = ({
         'modal-wrapper',
         `modal--wrapper-alignX-${alignX}`,
         `modal--wrapper-alignY-${alignY}`,
-        className,
+        className
       )}
       onClick={onClose}
     >
@@ -53,7 +53,7 @@ export const ModalWrapper: FC<ModalProps> = ({
         {children}
       </div>
     </div>,
-    document.getElementById('overlay') as HTMLElement,
+    document.getElementById('overlay') as HTMLElement
   );
 };
 
